@@ -85,5 +85,4 @@ public class StorageServiceImpl implements StorageService {
 
         return productMapper.toDto(productRepository.save(targetProduct));
     }
-
 }
