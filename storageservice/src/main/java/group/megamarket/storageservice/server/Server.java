@@ -1,6 +1,6 @@
 package group.megamarket.storageservice.server;
 
-import group.megamarket.storageservice.service.ProductService;
+import group.megamarket.storageservice.service.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +11,10 @@ import javax.xml.ws.Endpoint;
 public class Server {
     public static final String DEFAULT_ADDRESS = "http://localhost:8000/storageservice";
 
-    private final ProductService productService;
+    private final StorageService storageService;
 
-    public void start(){
-        Endpoint.publish(DEFAULT_ADDRESS, productService);
+    public void start() {
+        Endpoint.publish(DEFAULT_ADDRESS, storageService);
     }
 
 }
