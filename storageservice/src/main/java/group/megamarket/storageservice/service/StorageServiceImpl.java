@@ -10,6 +10,7 @@ import group.megamarket.storageservice.model.Role;
 import group.megamarket.storageservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.jws.WebService;
 import java.util.List;
@@ -54,6 +55,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    @Transactional
     public ProductDto addNewProduct(Long userId, String productName, Integer count) {
         if (!userService.userHasRole(userId, Role.SELLER)) {
             throw new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId));
@@ -68,6 +70,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    @Transactional
     public ProductDto changeProductCount(Long userId, String productName, Integer difference) {
         if (!userService.userHasRole(userId, Role.SELLER)) {
             throw new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId));
