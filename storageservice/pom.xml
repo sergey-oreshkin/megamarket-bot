@@ -26,6 +26,7 @@
         <mapstruct.version>1.5.4.Final</mapstruct.version>
         <postgresql.version>42.5.4</postgresql.version>
         <logback.version>1.2.11</logback.version>
+        <jackson.version>2.14.2</jackson.version>
     </properties>
 
     <dependencies>
@@ -88,7 +89,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.14.2</version>
+            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
     <build>
@@ -127,7 +128,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.example.Application</mainClass>
+                            <mainClass>group.megamarket.storageservice.StorageServiceApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

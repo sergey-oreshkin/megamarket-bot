@@ -1,16 +1,17 @@
-package group.megamarket.storageservice.service;
+package group.megamarket.storageservice.service.impl;
 
 import group.megamarket.storageservice.dto.ProductDto;
 import group.megamarket.storageservice.exception.ProductAlreadyExistException;
-import group.megamarket.storageservice.exception.ProductNotFoundException;
-import group.megamarket.storageservice.exception.UserNotFoundException;
 import group.megamarket.storageservice.mapper.ProductMapper;
 import group.megamarket.storageservice.model.Product;
 import group.megamarket.storageservice.model.Role;
 import group.megamarket.storageservice.repository.ProductRepository;
+import group.megamarket.storageservice.server.Server;
+import group.megamarket.storageservice.service.ProductService;
+import group.megamarket.storageservice.service.StorageService;
+import group.megamarket.storageservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.jws.WebService;
 import java.util.List;
@@ -21,19 +22,16 @@ import java.util.Optional;
 @WebService(
         name = "StorageService",
         portName = "ProductPort",
-        targetNamespace = "http://localhost:8000/storageservice",
+        targetNamespace = Server.DEFAULT_ADDRESS,
         endpointInterface = "group.megamarket.storageservice.service.StorageService")
 public class StorageServiceImpl implements StorageService {
 
-    public static final String PRODUCT_ALREADY_EXIST_MESSAGE =
+    public static final String PRODUCT_ALREADY_EXIST_MESSAGE_TEMPLATE =
             "Product with name %s already exist. Use changeProductCount instead.";
-    public static final String USER_NOT_FOUND_MESSAGE =
-            "User with id=%d not found or not a seller.";
-    public static final String PRODUCT_NOT_FOUND_MESSAGE =
-            "Product with name=%s not found.";
 
     private final UserService userService;
     private final ProductRepository productRepository;
+    private final ProductService productService;
     private final ProductMapper productMapper;
 
     @Override
@@ -43,9 +41,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public List<ProductDto> getAllByUserId(Long userId) {
-        if (!userService.userHasRole(userId, Role.SELLER)) {
-            throw new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId));
-        }
+        userService.checkUserHasRoleOrThrow(userId, Role.SELLER);
         return productMapper.toDto(productRepository.findAllByUserId(userId));
     }
 
@@ -55,14 +51,11 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    @Transactional
     public ProductDto addNewProduct(Long userId, String productName, Integer count) {
-        if (!userService.userHasRole(userId, Role.SELLER)) {
-            throw new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId));
-        }
+        userService.checkUserHasRoleOrThrow(userId, Role.SELLER);
         Optional<Product> productOptional = productRepository.findByUserIdAndName(userId, productName);
         if (productOptional.isPresent()) {
-            throw new ProductAlreadyExistException(String.format(PRODUCT_ALREADY_EXIST_MESSAGE, productName));
+            throw new ProductAlreadyExistException(String.format(PRODUCT_ALREADY_EXIST_MESSAGE_TEMPLATE, productName));
         }
         Product product = new Product(null, productName, count, userId);
 
@@ -70,22 +63,13 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    @Transactional
-    public ProductDto changeProductCount(Long userId, String productName, Integer difference) {
-        if (!userService.userHasRole(userId, Role.SELLER)) {
-            throw new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId));
-        }
+    public ProductDto changeProductCountBySeller(Long userId, String productName, Integer difference) {
+        userService.checkUserHasRoleOrThrow(userId, Role.SELLER);
+        return productMapper.toDto(productService.changeProductCount(userId, productName, difference));
+    }
 
-        Product targetProduct = productRepository.findByUserIdAndName(userId, productName)
-                .orElseThrow(() -> new ProductNotFoundException(String.format(PRODUCT_NOT_FOUND_MESSAGE, productName)));
-
-        targetProduct.setCount(targetProduct.getCount() + difference);
-
-        if (targetProduct.getCount() <= 0) {
-            productRepository.delete(targetProduct);
-            return productMapper.toDto(targetProduct);
-        }
-
-        return productMapper.toDto(productRepository.save(targetProduct));
+    @Override
+    public void changeProductCountByBuyer(List<ProductDto> products) {
+        productService.changeProductsCount(products);
     }
 }

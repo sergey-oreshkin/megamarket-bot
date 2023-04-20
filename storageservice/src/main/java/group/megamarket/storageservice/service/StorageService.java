@@ -1,25 +1,28 @@
 package group.megamarket.storageservice.service;
 
 import group.megamarket.storageservice.dto.ProductDto;
+import group.megamarket.storageservice.server.Server;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.List;
 
-@WebService(targetNamespace = "http://localhost:8000/storageservice", name = "StorageService")
+@WebService(targetNamespace = Server.DEFAULT_ADDRESS, name = "StorageService")
 public interface StorageService {
 
     List<ProductDto> getAll();
 
-    List<ProductDto> getAllByUserId(@WebParam(name = "userId", targetNamespace = "http://localhost:8000/storageservice") Long userId);
+    List<ProductDto> getAllByUserId(@WebParam(name = "userId", targetNamespace = Server.DEFAULT_ADDRESS) Long userId);
 
-    Long deleteAllByUserId(@WebParam(name = "user", targetNamespace = "http://localhost:8000/storageservice") Long userId);
+    Long deleteAllByUserId(@WebParam(name = "user", targetNamespace = Server.DEFAULT_ADDRESS) Long userId);
 
-    ProductDto addNewProduct(@WebParam(name = "user", targetNamespace = "http://localhost:8000/storageservice") Long userId,
-                             @WebParam(name = "product", targetNamespace = "http://localhost:8000/storageservice") String productName,
-                             @WebParam(name = "count", targetNamespace = "http://localhost:8000/storageservice") Integer count);
+    ProductDto addNewProduct(@WebParam(name = "user", targetNamespace = Server.DEFAULT_ADDRESS) Long userId,
+                             @WebParam(name = "product", targetNamespace = Server.DEFAULT_ADDRESS) String productName,
+                             @WebParam(name = "count", targetNamespace = Server.DEFAULT_ADDRESS) Integer count);
 
-    ProductDto changeProductCount(@WebParam(name = "user", targetNamespace = "http://localhost:8000/storageservice") Long userId,
-                                  @WebParam(name = "product", targetNamespace = "http://localhost:8000/storageservice") String productName,
-                                  @WebParam(name = "difference", targetNamespace = "http://localhost:8000/storageservice") Integer difference);
+    ProductDto changeProductCountBySeller(@WebParam(name = "user", targetNamespace = Server.DEFAULT_ADDRESS) Long userId,
+                                          @WebParam(name = "product", targetNamespace = Server.DEFAULT_ADDRESS) String productName,
+                                          @WebParam(name = "difference", targetNamespace = Server.DEFAULT_ADDRESS) Integer difference);
+
+    void changeProductCountByBuyer(@WebParam(name = "products", targetNamespace = Server.DEFAULT_ADDRESS) List<ProductDto> products);
 }

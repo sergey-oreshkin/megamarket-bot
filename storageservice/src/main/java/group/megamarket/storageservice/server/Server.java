@@ -16,5 +16,4 @@ public class Server {
     public void start() {
         Endpoint.publish(DEFAULT_ADDRESS, storageService);
     }
-
 }
