@@ -1,4 +1,4 @@
-package ru.megamarket.gateway;
+package group.megamarket.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

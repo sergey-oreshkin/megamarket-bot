@@ -1,16 +1,12 @@
-package ru.megamarket.gateway.component;
+package group.megamarket.gateway.handler.impl;
 
-import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
+import group.megamarket.gateway.handler.Handler;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+@Component
+public class HelpHandler implements Handler {
 
-public interface BotCommands {
-    List<BotCommand> LIST_OF_COMMANDS = List.of(
-            new BotCommand("/start", "start bot"),
-            new BotCommand("/help", "bot info")
-    );
-
-    String HELP_TEXT = "Команды общие\n" +
+    private final String HELP_TEXT = "Команды общие\n" +
             "/list - список всех товаров\n" +
             "/buy (id) - добавить товар с данным идентификатором в корзину\n" +
             "/cart - посмотреть свою корзину\n" +
@@ -19,7 +15,6 @@ public interface BotCommands {
             "/requestadmin - запрос на получение роли админ\n" +
             "/requestseller - запрос на получение роли продавец\n" +
             "Команды продавца\n" +
-            "/inventory - список товаров текущего продавца\n" +
             "/add (name count) - добавить себе на склад товар name в количестве count\n" +
             "/remove (name count) - убрать у себя со склада товар name в количестве count\n" +
             "Команды админа\n" +
@@ -27,4 +22,9 @@ public interface BotCommands {
             "/requests - список всех заявок на роль админа или продавца\n" +
             "/set (username role) - установить пользователю с именем username роль role. Если роль не указана - удалить все роли у данного пользователя.\n" +
             "/inventory (username) - список товаров продавца с именем username";
+
+    @Override
+    public String handle(String param) {
+        return HELP_TEXT;
+    }
 }
