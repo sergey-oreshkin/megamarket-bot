@@ -12,22 +12,19 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@Table(name = "roles")
+@Table(name = "requests")
 @NoArgsConstructor
-public class Role {
+public class Request {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "my_enum")
-    private RoleEnum roleEnum;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    //нужно ли?
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private Set<Request> requests;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
 }

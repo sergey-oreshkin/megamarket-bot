@@ -4,6 +4,7 @@ GET /requests - получить все запросы на роли
 PATCH /users dto {userId, admin:bool, seller:bool}
 POST /requests {userId, Role} - запросить роль
 GET /users {userId} - возвращать все роли конкретного юзера
+POST /users  dto {useId, username} - сохранить юзера
 
 storage(SOAP)
 GET /products {header:sellerId} - товары конкретного продавца
