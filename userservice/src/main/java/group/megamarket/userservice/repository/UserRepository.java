@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("select u.id from users as u " +
+    @Query(value = "select u.id from users as u " +
             "inner join user_role as ur on u.id=ur.user_id " +
-            "inner join roles as r on ur.role_id=r.id where r.role in ('ADMIN','SELLER')")
+            "inner join roles as r on ur.role_id=r.id where r.role in ('ADMIN','SELLER')", nativeQuery = true)
     List<User> findAllAdminAndSeller();
 }

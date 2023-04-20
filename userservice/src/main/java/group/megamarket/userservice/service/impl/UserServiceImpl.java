@@ -7,6 +7,7 @@ import group.megamarket.userservice.model.dto.UserRequestRoleDto;
 import group.megamarket.userservice.model.entity.Role;
 import group.megamarket.userservice.model.entity.RoleEnum;
 import group.megamarket.userservice.model.entity.User;
+import group.megamarket.userservice.repository.RoleRepository;
 import group.megamarket.userservice.repository.UserRepository;
 import group.megamarket.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final RoleRepository roleRepository;
+
     private final UserMapper userMapper;
 
     @Override
@@ -32,18 +35,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto save(UserDto userDto) {
-        //нужна ли проверка на нал?
+        if(userDto == null) throw new RuntimeException();
+
         User user = userRepository.save(userMapper.toUser(userDto));
-        Set<Role> roles = new HashSet<>();
-        Role role1 = new Role();
-        role1.setRoleEnum(RoleEnum.USER);
-        roles.add(role1);
-        user.setRoles(roles);
+        user.getRoles().add(roleRepository.findByRoleEnum(RoleEnum.USER));
+
+        userRepository.save(user);
         return userMapper.toUserDto(user);
     }
 
     @Override
-    public Set<Role> findRoleUserByYserId(Long id) {
+    public Set<Role> findRoleUserByUserId(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("There is no such user")).getRoles();
     }
 
@@ -53,14 +55,20 @@ public class UserServiceImpl implements UserService {
         Set<Role> userRole = user.getRoles();
 
         if(userRequestRoleDto.getIsAdmin() != null){
-            Role role1 = new Role();
-            role1.setRoleEnum(RoleEnum.ADMIN);
-            userRole.add(role1);
+            Role roleAdmin = roleRepository.findByRoleEnum(RoleEnum.ADMIN);
+            if(userRequestRoleDto.getIsAdmin()){
+                userRole.add(roleAdmin);
+            }else {
+                userRole.remove(roleAdmin);
+            }
         }
         if(userRequestRoleDto.getIsSeller() != null){
-            Role role2 = new Role();
-            role2.setRoleEnum(RoleEnum.SELLER);
-            userRole.add(role2);
+            Role roleSeller = roleRepository.findByRoleEnum(RoleEnum.SELLER);
+            if(userRequestRoleDto.getIsSeller()){
+                userRole.add(roleSeller);
+            }else {
+                userRole.remove(roleSeller);
+            }
         }
 
         user.setRoles(userRole);

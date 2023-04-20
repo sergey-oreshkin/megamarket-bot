@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public Set<RoleDto> getRoleUserById(@PathVariable(value = "id") Long id){
-        return roleMapper.toSetDto(userService.findRoleUserByYserId(id));
+        return roleMapper.toSetDto(userService.findRoleUserByUserId(id));
     }
 
     @PostMapping

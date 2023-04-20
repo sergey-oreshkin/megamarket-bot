@@ -12,7 +12,7 @@ import java.util.List;
 
 @Mapper
 public interface RequestMapper {
-    RequestMapper INSTANCE = Mappers.getMapper( RequestMapper.class );
+    RequestMapper INSTANCE = Mappers.getMapper(RequestMapper.class);
 
     @Mapping(source = "user", target = "userDto")
     @Mapping(source = "role", target = "roleDto")

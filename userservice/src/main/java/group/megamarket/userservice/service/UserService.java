@@ -15,7 +15,7 @@ public interface UserService {
 
     UserDto save(UserDto userDto);
 
-    Set<Role> findRoleUserByYserId(Long id);
+    Set<Role> findRoleUserByUserId(Long id);
 
     UserDto updateUserRole(UserRequestRoleDto userRequestRoleDto);
 }

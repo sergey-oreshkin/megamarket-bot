@@ -6,6 +6,8 @@ services:
       - bd
     ports:
       - "8088:8082"
+    environment:
+      - DBURL=jdbc:mysql://bd:3306/mega-market
   bd:
     image: mysql
     environment:
