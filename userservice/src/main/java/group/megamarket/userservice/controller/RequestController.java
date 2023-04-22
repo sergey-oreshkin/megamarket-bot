@@ -22,7 +22,7 @@ public class RequestController {
         return requestMapper.toListDto(requestService.findAll());
     }
 
-    //что возвращать то?
+    //что возвращать то? и кто принимает решение на одобрение роли?
     @PostMapping
     public Boolean requestRole(@RequestBody RequestRoleDto requestRole){
         requestService.requestRole(requestRole);

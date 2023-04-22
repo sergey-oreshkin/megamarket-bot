@@ -5,7 +5,6 @@ import group.megamarket.userservice.model.dto.RequestRoleDto;
 import group.megamarket.userservice.model.entity.Request;
 import group.megamarket.userservice.model.entity.Role;
 import group.megamarket.userservice.model.entity.User;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

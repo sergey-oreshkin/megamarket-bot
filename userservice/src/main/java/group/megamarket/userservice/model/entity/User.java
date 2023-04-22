@@ -19,9 +19,11 @@ public class User {
     @Id
     private Long id;
 
+    @Column(name = "username")
     private String username;
 
-    @ManyToMany
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -29,6 +31,7 @@ public class User {
     )
     private Set<Role> roles;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Request> requests;
 }

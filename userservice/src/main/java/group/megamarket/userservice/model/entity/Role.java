@@ -25,9 +25,11 @@ public class Role {
     private RoleEnum roleEnum;
 
     //нужно ли?
-    @ManyToMany(mappedBy = "roles")
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<User> users;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
+    @ToString.Exclude
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private Set<Request> requests;
 }

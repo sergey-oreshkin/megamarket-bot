@@ -13,10 +13,10 @@ public class HandlerException {
         return e.getMessage();
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String exceptionHandler(Exception e){
-        return "Something goes wrong";
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public String exceptionHandler(Exception e){
+//        return "Something goes wrong";
+//    }
 
 }
