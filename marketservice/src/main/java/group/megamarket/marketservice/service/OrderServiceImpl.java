@@ -19,10 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -46,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
             throw new ForbiddenException("Количество добавленного товара превышает количество товара на складе");
         }*/
 
-        Order order = orderRepository.findByUserId(orderRequest.getUserId())
+        Order order = orderRepository.findByUserIdAndStatus(orderRequest.getUserId(), Status.AWAITING_PAYMENT)
                                      .orElse(Order.builder()
                                                   .orderProducts(new HashSet<>())
                                                   .userId(orderRequest.getUserId())
@@ -56,7 +53,6 @@ public class OrderServiceImpl implements OrderService {
 
         OrderProduct newOrderProduct = OrderProduct.builder()
                                                    .pk(OrderProductPK.builder()
-                                                                     .order(order)
                                                                      .productId(orderRequest.getProductId())
                                                                      .build())
                                                    .quantity(orderRequest.getQuantity())
@@ -83,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse getOrder(Long userId) {
         log.info("getOrder is called");
 
-        Order order = orderRepository.findByUserId(userId)
+        Order order = orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
                                      .orElseThrow(() -> new NotFoundException(
                                              String.format("Заказ пользователя с id=%s не найден", userId)
                                      ));
@@ -95,7 +91,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponse pay(Long userId) {
-        Order order = orderRepository.findByUserId(userId)
+        Order order = orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
                                      .orElseThrow(() -> new NotFoundException(
                                              String.format("Заказ пользователя с id=%s не найден", userId)
                                      ));
@@ -111,19 +107,8 @@ public class OrderServiceImpl implements OrderService {
     public void deleteProduct(Long userId, Long productId) {
         log.info("deleteProduct is called");
 
-       Order order = orderRepository.findByUserId(userId)
-                                     .orElseThrow(() -> new NotFoundException(
-                                             String.format("Заказ пользователя с id=%s не найден", userId)
-                                     ));
+        orderProductRepository.deleteOrderProductByProductId(productId, userId);
 
-         Set<OrderProduct> orderProducts = order.getOrderProducts()
-                                                .stream()
-                                                .filter(op -> !Objects.equals(op.getPk().getProductId(), productId))
-                                                .collect(Collectors.toSet());
-
-        order.setOrderProducts(orderProducts);
-
-       // orderProductRepository.deleteOrderProductByProductId(productId, userId);
         log.info("Product deleted successfully");
     }
 
