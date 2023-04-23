@@ -4,7 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,12 +20,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_id")
-    private Long productId;
-
-    @Column(name = "quantity")
-    private Long quantity;
-
     @Column(name = "order_date")
     private LocalDate orderDate;
 
@@ -32,6 +27,10 @@ public class Order {
     private Long userId;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToMany(mappedBy = "pk.order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<OrderProduct> orderProducts;
 }
 

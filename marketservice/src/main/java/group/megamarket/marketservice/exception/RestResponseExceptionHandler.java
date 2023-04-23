@@ -13,10 +13,19 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(ForbiddenException.class)
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
-    public ResponseEntity<ErrorResponse> handleProductServiceException(ForbiddenException exception) {
+    public ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException exception) {
         return new ResponseEntity<>(ErrorResponse.builder()
                                                  .errorMessage(exception.getMessage())
                                                  .errorCode(HttpStatus.FORBIDDEN.toString())
                                                  .build(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException exception) {
+        return new ResponseEntity<>(ErrorResponse.builder()
+                                                 .errorMessage(exception.getMessage())
+                                                 .errorCode(HttpStatus.NOT_FOUND.toString())
+                                                 .build(), HttpStatus.NOT_FOUND);
     }
 }

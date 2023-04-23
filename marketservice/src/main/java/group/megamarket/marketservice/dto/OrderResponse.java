@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * A DTO for the {@link group.megamarket.marketservice.entity.Order} entity
@@ -16,10 +17,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderResponse implements Serializable {
-    private Long productId;
-    private Long quantity;
     @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate orderDate;
     private Long userId;
     private Status status;
+    private List<OrderProductDto> orderProducts;
 }

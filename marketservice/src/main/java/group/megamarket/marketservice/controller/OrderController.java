@@ -21,4 +21,24 @@ public class OrderController {
          return service.addProduct(orderRequest);
     }
 
+    @GetMapping("/users/{userId}")
+    public OrderResponse getOrder(@PathVariable Long userId){
+        return service.getOrder(userId);
+    }
+
+    @PostMapping("/users/{userId}")
+    public OrderResponse pay(@PathVariable Long userId){
+        return service.pay(userId);
+    }
+
+    @DeleteMapping("/users/{userId}/products/{productId}")
+    public void deleteProduct(@PathVariable Long userId, @PathVariable Long productId){
+        service.deleteProduct(userId, productId);
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public void clear(@PathVariable Long userId){
+        service.clear(userId);
+    }
+
 }
