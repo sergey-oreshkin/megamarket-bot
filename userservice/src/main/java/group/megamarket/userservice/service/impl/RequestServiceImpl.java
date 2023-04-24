@@ -13,6 +13,7 @@ import group.megamarket.userservice.service.RequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Repository
@@ -33,6 +34,10 @@ public class RequestServiceImpl implements RequestService {
     public RequestRoleDto saveRequestRole(RequestRoleDto requestRole) {
         User user = userRepository.findById(requestRole.getUserId()).orElseThrow(()-> new UserNotFoundException("There is no such user"));
         Role role = roleRepository.findByRoleEnum(requestRole.getRoleDto().getRoleEnum());
+
+        //it's right?
+        if(user.getRoles() == null) user.setRoles(new HashSet<>());
+
         if (user.getRoles().contains(role)) {
             return requestRole;
         }else {

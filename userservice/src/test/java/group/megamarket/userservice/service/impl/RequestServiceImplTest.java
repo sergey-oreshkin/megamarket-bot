@@ -1,5 +1,6 @@
 package group.megamarket.userservice.service.impl;
 
+import group.megamarket.userservice.exception.UserNotFoundException;
 import group.megamarket.userservice.mapper.RequestMapper;
 import group.megamarket.userservice.model.dto.RequestRoleDto;
 import group.megamarket.userservice.model.dto.RoleDto;
@@ -66,59 +67,58 @@ class RequestServiceImplTest {
         RoleDto roleDto = new RoleDto(1L, RoleEnum.ADMIN);
         RequestRoleDto requestRole = new RequestRoleDto(userId, roleDto);
         RequestRoleDto expected = requestRole;
-//        Request request = new Request();
-//        request.setId(1L);
-//        request.setUser(user);
-//        request.setRole(role);
+        Request request = new Request();
+        request.setUser(user);
+        request.setRole(role);
         when(requestMapper.toRequest(requestRole)).thenReturn(request);
+        request.setId(1L);
+        when(requestRepository.save(request)).thenReturn(request);
+        when(requestMapper.toRequestRoleDto(request)).thenReturn(expected);
+
+        RequestRoleDto result = requestService.saveRequestRole(requestRole);
+
+        assertNotNull(result);
+        assertEquals(expected, result);
+        verify(userRepository).findById(userId);
+        verify(requestRepository).save(request);
+    }
+
+    @Test
+    void testSaveRequestRole_whenUserExistsAndDoesNotHaveRole() {
+        Long userId = 1L;
+        User user = new User();
+        user.setId(userId);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        RoleDto roleDto = new RoleDto(1L, RoleEnum.ADMIN);
+        RequestRoleDto requestRole = new RequestRoleDto(userId, roleDto);
+        RequestRoleDto expected = requestRole;
+        Request request = new Request();
+        request.setUser(user);
+        when(requestMapper.toRequest(requestRole)).thenReturn(request);
+        request.setId(1L);
+        when(requestRepository.save(request)).thenReturn(request);
+        when(requestMapper.toRequestRoleDto(request)).thenReturn(expected);
 
         RequestRoleDto result = requestService.saveRequestRole(requestRole);
 
         assertEquals(expected, result);
         verify(userRepository).findById(userId);
+        verify(roleRepository).findByRoleEnum(roleDto.getRoleEnum());
+        verify(requestRepository).save(request);
+    }
+
+    @Test
+    void testSaveRequestRole_whenUserDoesNotExist() {
+        Long userId = 1L;
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        RoleDto roleDto = new RoleDto(1L, RoleEnum.ADMIN);
+        RequestRoleDto requestRole = new RequestRoleDto(userId, roleDto);
+
+        assertThrows(UserNotFoundException.class, () -> requestService.saveRequestRole(requestRole));
+        verify(userRepository).findById(userId);
         verifyNoInteractions(roleRepository);
         verifyNoInteractions(requestRepository);
     }
-//
-//    @Test
-//    void testSaveRequestRole_whenUserExistsAndDoesNotHaveRole() {
-//        Long userId = 1L;
-//        User user = new User();
-//        user.setId(userId);
-//        Set<Role> roles = new HashSet<>();
-//        roles.add(new Role(2L, RoleEnum.SELLER));
-//        user.setRoles(roles);
-//        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-//
-//        RoleDto roleDto = new RoleDto(1L, RoleEnum.ADMIN);
-//        RequestRoleDto requestRole = new RequestRoleDto(1L, userId, roleDto);
-//        RequestRoleDto expected = requestRole;
-//        Request request = new Request();
-//        request.setId(requestRole.getId());
-//        request.setUser(user);
-//        request.setRole(new Role(roleDto.getId(), roleDto.getRoleEnum()));
-//        when(requestMapper.toRequest(requestRole)).thenReturn(request);
-//        when(requestMapper.toRequestRoleDto(request)).thenReturn(expected);
-//
-//        RequestRoleDto result = requestService.saveRequestRole(requestRole);
-//
-//        assertEquals(expected, result);
-//        verify(userRepository).findById(userId);
-//        verify(roleRepository).findByRoleEnum(roleDto.getRoleEnum());
-//        verify(requestRepository).save(request);
-//    }
-//
-//    @Test
-//    void testSaveRequestRole_whenUserDoesNotExist() {
-//        Long userId = 1L;
-//        when(userRepository.findById(userId)).thenReturn(Optional.empty());
-//
-//        RoleDto roleDto = new RoleDto(1L, RoleEnum.ADMIN);
-//        RequestRoleDto requestRole = new RequestRoleDto(1L, userId, roleDto);
-//
-//        assertThrows(UserNotFoundException.class, () -> requestService.saveRequestRole(requestRole));
-//        verify(userRepository).findById(userId);
-//        verifyNoInteractions(roleRepository);
-//        verifyNoInteractions(requestRepository);
-//    }
 }
