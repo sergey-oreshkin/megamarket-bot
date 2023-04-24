@@ -27,6 +27,7 @@
         <mapstruct.version>1.5.4.Final</mapstruct.version>
         <junit.version>5.8.2</junit.version>
         <mockito.version>5.2.0</mockito.version>
+        <h2.version>2.1.214</h2.version>
     </properties>
 
     <dependencies>
@@ -79,6 +80,12 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

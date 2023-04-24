@@ -10,5 +10,5 @@ import java.util.List;
 public interface RequestService {
     List<Request> findAll();
 
-    Boolean requestRole(RequestRoleDto requestRole);
+    RequestRoleDto saveRequestRole(RequestRoleDto requestRole);
 }

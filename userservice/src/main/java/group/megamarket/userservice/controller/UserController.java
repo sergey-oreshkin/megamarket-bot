@@ -23,20 +23,6 @@ public class UserController {
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
 
-//    @GetMapping
-//    public List<UserRoleDto> users(){
-//        System.out.println("aaa");
-//        List<User> userList =  userService.findAllAdminAndSeller();
-//        System.out.println(userList);
-//        System.out.println("aaa");
-//        List<UserRoleDto> roleDtos = new ArrayList<>();
-//        for (User user:userService.findAllAdminAndSeller()){
-//            UserRoleDto roleDto = userMapper.toUserRoleDto(user);
-//            roleDtos.add(roleDto);
-//        }
-//        return roleDtos;
-//    }
-
     @GetMapping
     public List<UserRoleDto> getUsers(){
         return userMapper.toListUserRoleDto(userService.findAllAdminAndSeller());

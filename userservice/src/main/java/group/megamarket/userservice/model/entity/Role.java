@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -32,4 +33,17 @@ public class Role {
     @ToString.Exclude
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private Set<Request> requests;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(id, role.id) && roleEnum == role.roleEnum;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roleEnum);
+    }
 }

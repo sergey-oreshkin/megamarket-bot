@@ -13,10 +13,8 @@ import group.megamarket.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -31,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllAdminAndSeller() {
-        return userRepository.findAllAdminAndSeller();
+        return userRepository.findAllAdminAndSeller(List.of(RoleEnum.ADMIN, RoleEnum.SELLER));
     }
 
     @Override
@@ -39,7 +37,14 @@ public class UserServiceImpl implements UserService {
         if(userDto == null) throw new RuntimeException();
 
         User user = userRepository.save(userMapper.toUser(userDto));
-        user.getRoles().add(roleRepository.findByRoleEnum(RoleEnum.USER));
+        if(user.getRoles() != null) {
+            user.getRoles().add(roleRepository.findByRoleEnum(RoleEnum.USER));
+        }else {
+            Set<Role> roles = new HashSet<>();
+            Role role = roleRepository.findByRoleEnum(RoleEnum.USER);
+            roles.add(role);
+            user.setRoles(roles);
+        }
 
         userRepository.save(user);
         return userMapper.toUserDto(user);
