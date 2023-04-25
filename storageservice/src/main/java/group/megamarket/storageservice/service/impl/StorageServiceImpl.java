@@ -22,7 +22,7 @@ import java.util.Optional;
 @WebService(
         name = "StorageService",
         portName = "ProductPort",
-        targetNamespace = Server.DEFAULT_ADDRESS,
+        targetNamespace = Server.DEFAULT_NAMESPACE,
         endpointInterface = "group.megamarket.storageservice.service.StorageService")
 public class StorageServiceImpl implements StorageService {
 

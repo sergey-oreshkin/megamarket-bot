@@ -9,7 +9,8 @@ import javax.xml.ws.Endpoint;
 @Component
 @RequiredArgsConstructor
 public class Server {
-    public static final String DEFAULT_ADDRESS = "http://localhost:8000/storageservice";
+    public static final String DEFAULT_ADDRESS = "http://0.0.0.0:8000/soap";
+    public static final String DEFAULT_NAMESPACE = "http://localhost:8000/soap";
 
     private final StorageService storageService;
 
