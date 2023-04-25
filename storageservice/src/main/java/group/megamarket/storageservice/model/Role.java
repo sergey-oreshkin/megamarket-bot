@@ -1,5 +1,5 @@
 package group.megamarket.storageservice.model;
 
 public enum Role {
-    ADMIN, SELLER
+    ADMIN, SELLER, USER
 }

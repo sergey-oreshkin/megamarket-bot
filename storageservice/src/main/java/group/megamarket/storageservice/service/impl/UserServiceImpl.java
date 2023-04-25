@@ -1,5 +1,6 @@
 package group.megamarket.storageservice.service.impl;
 
+import group.megamarket.storageservice.dto.RoleDto;
 import group.megamarket.storageservice.exception.UserNotFoundException;
 import group.megamarket.storageservice.model.Role;
 import group.megamarket.storageservice.service.UserService;
@@ -24,8 +25,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void checkUserHasRoleOrThrow(Long userId, Role role) {
-        Role[] roles = restTemplate.getForObject(String.format(GET_ROLES_URI_TEMPLATE, userId), Role[].class);
-        if (Arrays.stream(roles).noneMatch(r -> r.equals(role))) {
+        try {
+            RoleDto[] roles = restTemplate.getForObject(String.format(GET_ROLES_URI_TEMPLATE, userId), RoleDto[].class);
+            if (Arrays.stream(roles).map(RoleDto::getRole).noneMatch(r -> r.equals(role))) {
+                throw new RuntimeException();
+            }
+        } catch (Exception e) {
             throw new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE_TEMPLATE, userId));
         }
     }
