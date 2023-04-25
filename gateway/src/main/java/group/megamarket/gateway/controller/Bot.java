@@ -17,8 +17,12 @@ import java.util.Map;
 
 import static group.megamarket.gateway.component.BotCommands.LIST_OF_COMMANDS;
 
-@Component
+/**
+ * Контроллер для работы endpoints
+ */
+
 @Slf4j
+@Component
 public class Bot extends TelegramLongPollingBot {
 
     private final BotConfig config;
@@ -53,14 +57,13 @@ public class Bot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
-            String userName = update.getMessage().getFrom().getFirstName();
             String message = handlers.get(messageText);
             if (message == null) {
-                sendResponse(chatId, "Uncorrected");
+                sendResponse(chatId, "Uncorrected message");
                 return;
             }
             Handler handler = (Handler) context.getBean(message);
-            sendResponse(chatId, handler.handle(userName));
+            sendResponse(chatId, handler.handle(update));
         }
     }
 

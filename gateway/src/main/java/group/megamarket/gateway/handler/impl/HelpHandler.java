@@ -2,6 +2,7 @@ package group.megamarket.gateway.handler.impl;
 
 import group.megamarket.gateway.handler.Handler;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 public class HelpHandler implements Handler {
@@ -24,7 +25,7 @@ public class HelpHandler implements Handler {
             "/inventory (username) - список товаров продавца с именем username";
 
     @Override
-    public String handle(String param) {
+    public String handle(Update update) {
         return HELP_TEXT;
     }
 }

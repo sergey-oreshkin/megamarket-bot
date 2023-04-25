@@ -1,6 +1,7 @@
 package group.megamarket.gateway.handler;
 
-public interface Handler {
+import org.telegram.telegrambots.meta.api.objects.Update;
 
-    String handle(String param);
+public interface Handler {
+    String handle(Update update);
 }

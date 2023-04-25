@@ -2,11 +2,13 @@ package group.megamarket.gateway.handler.impl;
 
 import group.megamarket.gateway.handler.Handler;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 public class RequestAdminHandler implements Handler {
+
     @Override
-    public String handle(String param) {
-        return "request admin logic";
+    public String handle(Update update) {
+        return null;
     }
 }

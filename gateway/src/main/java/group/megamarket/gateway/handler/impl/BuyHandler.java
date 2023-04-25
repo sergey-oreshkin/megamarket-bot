@@ -2,11 +2,13 @@ package group.megamarket.gateway.handler.impl;
 
 import group.megamarket.gateway.handler.Handler;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 public class BuyHandler implements Handler {
+
     @Override
-    public String handle(String param) {
-        return "buy logic";
+    public String handle(Update update) {
+        return null;
     }
 }
