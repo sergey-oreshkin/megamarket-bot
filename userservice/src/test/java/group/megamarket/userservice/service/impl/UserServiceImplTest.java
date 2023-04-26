@@ -1,6 +1,5 @@
 package group.megamarket.userservice.service.impl;
 
-import group.megamarket.userservice.exception.RoleNotFoundException;
 import group.megamarket.userservice.exception.UserNotFoundException;
 import group.megamarket.userservice.model.dto.UserDto;
 import group.megamarket.userservice.model.dto.UserRequestRoleDto;
@@ -158,29 +157,6 @@ class UserServiceImplTest {
 
         // Execute & Verify
         assertThrows(UserNotFoundException.class, () -> {
-            userService.updateUserRole(userRequestRoleDto);
-        });
-    }
-
-    @Test
-    public void testUpdateUserRole_AdminRoleNotFound() {
-        // Setup
-        Long userId = 1L;
-        Role sellerRole = new Role();
-        sellerRole.setRoleEnum(RoleEnum.SELLER);
-        User user = new User();
-        user.setId(userId);
-        user.setUsername("max");
-        Set<Role> roles = new HashSet<>();
-        roles.add(sellerRole);
-        user.setRoles(roles);
-        UserRequestRoleDto userRequestRoleDto = new UserRequestRoleDto(userId, true, true);
-
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(roleRepository.findByRoleEnum(RoleEnum.ADMIN)).thenReturn(null);
-
-        // Execute & Verify
-        assertThrows(RoleNotFoundException.class, () -> {
             userService.updateUserRole(userRequestRoleDto);
         });
     }

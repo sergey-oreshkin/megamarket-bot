@@ -3,6 +3,8 @@ package group.megamarket.userservice.controller;
 import group.megamarket.userservice.mapper.RoleMapper;
 import group.megamarket.userservice.mapper.UserMapper;
 import group.megamarket.userservice.model.dto.RoleDto;
+import group.megamarket.userservice.model.dto.UserDto;
+import group.megamarket.userservice.model.dto.UserRequestRoleDto;
 import group.megamarket.userservice.model.dto.UserRoleDto;
 import group.megamarket.userservice.model.entity.Role;
 import group.megamarket.userservice.model.entity.RoleEnum;
@@ -14,15 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerTest {
@@ -68,5 +65,63 @@ class UserControllerTest {
         assertNotNull(result);
         verify(userService).findAllAdminAndSeller();
         assertEquals(result, userRoleDtoList);
+        verify(userService, times(1)).findAllAdminAndSeller();
+    }
+
+    @Test
+    public void testGetRoleUserById() throws Exception {
+        // Setup
+        Long id = 1L;
+        Role role = new Role();
+        role.setId(1L);
+        role.setRoleEnum(RoleEnum.ADMIN);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+
+        RoleDto roleDto = new RoleDto();
+        roleDto.setId(1L);
+        roleDto.setRoleEnum(RoleEnum.ADMIN);
+        Set<RoleDto> roleDtos = new HashSet<>();
+        roleDtos.add(roleDto);
+
+        when(userService.findRoleUserByUserId(id)).thenReturn(roles);
+        when(roleMapper.toSetRoleDto(roles)).thenReturn(roleDtos);
+
+        // Test
+        Set<RoleDto> result = userController.getRoleUserById(id);
+
+        // Verify
+        verify(userService, times(1)).findRoleUserByUserId(id);
+        verify(roleMapper, times(1)).toSetRoleDto(roles);
+        assertSame(result, roleDtos);
+    }
+
+    @Test
+    public void testSaveUser() throws Exception {
+        // Setup
+        UserDto userDto = new UserDto();
+        when(userService.save(userDto)).thenReturn(userDto);
+
+        // Test
+        UserDto result = userController.saveUser(userDto);
+
+        // Verify
+        verify(userService, times(1)).save(userDto);
+        assertSame(result, userDto);
+    }
+
+    @Test
+    public void testUpdateUserRole() throws Exception {
+        // Setup
+        UserRequestRoleDto userRequestRoleDto = new UserRequestRoleDto();
+        UserDto userDto = new UserDto();
+        when(userService.updateUserRole(userRequestRoleDto)).thenReturn(userDto);
+
+        // Test
+        UserDto result = userController.updateUserRole(userRequestRoleDto);
+
+        // Verify
+        verify(userService, times(1)).updateUserRole(userRequestRoleDto);
+        assertSame(result, userDto);
     }
 }
