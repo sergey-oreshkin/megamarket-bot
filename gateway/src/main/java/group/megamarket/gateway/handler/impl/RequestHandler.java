@@ -14,7 +14,7 @@ public class RequestHandler implements Handler {
 
     @Override
     public String handle(Update update) {
-        return client.getAllRequests().toString();
+        return "Список всех запросов \n" + client.getAllRequests().toString();
     }
 }
 

@@ -14,6 +14,6 @@ public class AllHandler implements Handler {
 
     @Override
     public String handle(Update update) {
-        return client.getUsers().toString();
+        return "Список всех пользователей \n" + client.getUsers().toString();
     }
 }

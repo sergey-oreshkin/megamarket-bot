@@ -26,7 +26,7 @@ public interface UserServiceClient {
     RequestRoleDto saveRequestRole(@RequestBody RequestRoleDto requestRole);
 
     @GetMapping("/users")
-    public List<UserRoleDto> getUsers();
+    List<UserRoleDto> getUsers();
 
     @GetMapping("/request")
     List<RequestDto> getAllRequests();
