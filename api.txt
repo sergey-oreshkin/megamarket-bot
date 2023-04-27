@@ -3,6 +3,7 @@ GET /users - все админы и продавцы
 GET /requests - получить все запросы на роли
 PATCH /users dto {userId, admin:bool, seller:bool}
 POST /requests {userId, Role} - запросить роль
+GET /users {userId} ->
 
 storage(SOAP)
 GET /products {header:sellerId} - товары конкретного продавца
@@ -10,6 +11,7 @@ GET /products - все доступные товары
 POST /products - продавец добавляет товар на склад
 DELETE /products  {header:sellerId} - удалить все товары продавца
 PATCH /products ??? - продавец меняет количество на складе (продавец, продукт и количество)
+POST /order {["product":"id":long, "count": int]}
 
 market
 PUT /carts {userId, товар ID } - добавить товар в корзину
