@@ -13,7 +13,7 @@ public interface StorageService {
 
     List<ProductDto> getAll();
 
-    List<ProductDto> getAllByUserId(@WebParam(name = "userId", targetNamespace = Server.DEFAULT_NAMESPACE) Long userId) throws UserNotFoundException;
+    List<ProductDto> getAllByUserId(@WebParam(name = "userId", targetNamespace = Server.DEFAULT_NAMESPACE) Long userId);
 
     Long deleteAllByUserId(@WebParam(name = "userId", targetNamespace = Server.DEFAULT_NAMESPACE) Long userId);
 

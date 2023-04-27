@@ -12,6 +12,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 
+/**
+ * Сервис для работы с юзерами
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__({@Autowired}))
 public class UserServiceImpl implements UserService {
@@ -23,6 +26,12 @@ public class UserServiceImpl implements UserService {
     @Qualifier("userRestTemplate")
     private final RestTemplate restTemplate;
 
+    /**
+     * Проверяет есть ли у юзера данная роль, если нет, кидает эксепшен
+     * @param userId - id юзера
+     * @param role - роль
+     * @throws UserNotFoundException при любых непонятках
+     */
     @Override
     public void checkUserHasRoleOrThrow(Long userId, Role role) {
         try {

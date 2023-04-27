@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Сервис для работы с продуктами. Изменение количества и тп.
+ */
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -24,6 +27,13 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+    /**
+     *
+     * @param userId - id юзера
+     * @param productName - название продукта
+     * @param difference - на сколько изменить количество(может быть отрицательным, чтоб уменьшить)
+     * @return Product c измененным количеством
+     */
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public Product changeProductCount(Long userId, String productName, int difference) {
@@ -39,6 +49,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(targetProduct);
     }
 
+    /**
+     * Уменьшает количество каждого продукта в списке на величину установленную в ProductDto#count
+     * @param products - список продуктов у которых надо изменить количество.
+     */
     @Override
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void changeProductsCount(List<ProductDto> products) {

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import javax.xml.ws.Endpoint;
 
+/**
+ * SOAP сервер
+ */
 @Component
 @RequiredArgsConstructor
 public class Server {
@@ -14,6 +17,9 @@ public class Server {
 
     private final StorageService storageService;
 
+    /**
+     * Запуск сервера
+     */
     public void start() {
         Endpoint.publish(DEFAULT_ADDRESS, storageService);
     }

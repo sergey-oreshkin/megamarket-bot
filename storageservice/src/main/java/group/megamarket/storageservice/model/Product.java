@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * Отображение таблицы products в БД
+ */
 @Getter
 @Setter
 @AllArgsConstructor

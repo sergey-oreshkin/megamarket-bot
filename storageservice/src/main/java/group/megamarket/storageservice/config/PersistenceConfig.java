@@ -17,6 +17,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Настройка бинов подключения к БД и JPA
+ */
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "group.megamarket.storageservice")
@@ -26,6 +29,9 @@ public class PersistenceConfig {
 
     private final Environment env;
 
+    /**
+     * @return DataSource
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -36,6 +42,10 @@ public class PersistenceConfig {
         return dataSource;
     }
 
+    /**
+     * @param dataSource - сконфигурированный DataSource
+     * @return LocalContainerEntityManagerFactoryBean
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         final LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
@@ -47,6 +57,10 @@ public class PersistenceConfig {
         return emf;
     }
 
+    /**
+     * @param entityManagerFactory - бин EntityManagerFactory
+     * @return JpaTransactionManager
+     */
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();

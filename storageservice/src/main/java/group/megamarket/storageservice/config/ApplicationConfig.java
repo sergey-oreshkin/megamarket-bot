@@ -9,6 +9,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+
+/**
+ * Общая конфигурация приложения
+ */
 @Configuration
 @ComponentScan("group.megamarket.storageservice")
 @PropertySource("classpath:/application.properties")
@@ -17,6 +21,10 @@ public class ApplicationConfig {
 
     private final Environment env;
 
+    /**
+     * Rest Template с установлееным базовым адресом юзер сервиса
+     * @return RestTemplate
+     */
     @Bean
     public RestTemplate userRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();

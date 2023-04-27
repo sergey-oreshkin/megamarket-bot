@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * ДТО продукта
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
