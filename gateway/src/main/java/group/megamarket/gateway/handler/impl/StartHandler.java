@@ -1,6 +1,6 @@
 package group.megamarket.gateway.handler.impl;
 
-import group.megamarket.gateway.dto.UserDto;
+import group.megamarket.gateway.dto.user.UserDto;
 import group.megamarket.gateway.feign.UserServiceClient;
 import group.megamarket.gateway.handler.Handler;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequiredArgsConstructor
 public class StartHandler implements Handler {
 
-    private final UserServiceClient userServiceClient;
+    private final UserServiceClient client;
 
     @Override
     public String handle(Update update) {
@@ -28,6 +28,6 @@ public class StartHandler implements Handler {
                 .username(name)
                 .build();
 
-        return userServiceClient.saveUser(userDto);
+        return client.saveUser(userDto);
     }
 }

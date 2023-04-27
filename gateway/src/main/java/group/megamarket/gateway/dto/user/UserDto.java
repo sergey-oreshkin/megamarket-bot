@@ -1,4 +1,4 @@
-package group.megamarket.gateway.dto;
+package group.megamarket.gateway.dto.user;
 
 import lombok.*;
 
