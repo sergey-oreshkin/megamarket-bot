@@ -2,6 +2,7 @@ package group.megamarket.storageservice.service.impl;
 
 import group.megamarket.storageservice.dto.ProductDto;
 import group.megamarket.storageservice.exception.ProductAlreadyExistException;
+import group.megamarket.storageservice.exception.UserNotFoundException;
 import group.megamarket.storageservice.mapper.ProductMapper;
 import group.megamarket.storageservice.model.Product;
 import group.megamarket.storageservice.model.Role;
@@ -40,7 +41,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public List<ProductDto> getAllByUserId(Long userId) {
+    public List<ProductDto> getAllByUserId(Long userId) throws UserNotFoundException {
         userService.checkUserHasRoleOrThrow(userId, Role.SELLER);
         return productMapper.toDto(productRepository.findAllByUserId(userId));
     }

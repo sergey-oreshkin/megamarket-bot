@@ -53,8 +53,9 @@ public class ProductServiceImpl implements ProductService {
 
             if (targetProduct.getCount() == 0) {
                 productRepository.delete(targetProduct);
+            } else {
+                productRepository.save(targetProduct);
             }
-            productRepository.save(targetProduct);
         }
     }
 }
