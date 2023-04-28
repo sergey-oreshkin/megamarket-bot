@@ -12,6 +12,7 @@ GET /products - все доступные товары
 POST /products - продавец добавляет товар на склад
 DELETE /products  {header:sellerId} - удалить все товары продавца
 PATCH /products ??? - продавец меняет количество на складе (продавец, продукт и количество)
+POST /order {["product":"id":long, "count": int]}
 
 market
 PUT /carts {userId, товар ID } - добавить товар в корзину
