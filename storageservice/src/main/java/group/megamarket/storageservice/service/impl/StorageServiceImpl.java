@@ -59,6 +59,7 @@ public class StorageServiceImpl implements StorageService {
 
     /**
      * Удаляет все продукты определенного юзера
+     *
      * @param userId - id юзера
      * @return количество удаленных записей
      */
@@ -69,9 +70,10 @@ public class StorageServiceImpl implements StorageService {
 
     /**
      * Добавляет в базу продукт
-     * @param userId - id юзера
+     *
+     * @param userId      - id юзера
      * @param productName - название продукта
-     * @param count - количество
+     * @param count       - количество
      * @return - ДТО продукта добавленного в базу
      * @throws UserNotFoundException - если юзер не найден
      */
@@ -89,9 +91,10 @@ public class StorageServiceImpl implements StorageService {
 
     /**
      * Изменяет количество существующего продукта на значение difference. Будет уменьшено если difference отрицательный.
-     * @param userId - id юзера
+     *
+     * @param userId      - id юзера
      * @param productName - название продукта
-     * @param difference - разность количества
+     * @param difference  - разность количества
      * @return ДТО измененного продукта
      * @throws UserNotFoundException - если юзер не найден
      */
@@ -103,6 +106,7 @@ public class StorageServiceImpl implements StorageService {
 
     /**
      * Уменьшает количество каждого продукта в списке на величину установленную в ProductDto#count
+     *
      * @param products - список продуктов, количества которых нужно изменить
      */
     @Override

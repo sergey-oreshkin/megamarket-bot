@@ -1,7 +1,6 @@
 package group.megamarket.storageservice.service;
 
 import group.megamarket.storageservice.dto.ProductDto;
-import group.megamarket.storageservice.exception.UserNotFoundException;
 import group.megamarket.storageservice.server.Server;
 
 import javax.jws.WebParam;
