@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class HandlerException {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String userNotFoundException(UserNotFoundException e){
+    public String userNotFoundException(UserNotFoundException e) {
         return e.getMessage();
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String exceptionHandler(Exception e){
+    public String exceptionHandler(Exception e) {
         e.printStackTrace();
         return "Something goes wrong";
     }

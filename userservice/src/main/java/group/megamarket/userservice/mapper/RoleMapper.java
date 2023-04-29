@@ -13,5 +13,6 @@ public interface RoleMapper {
     RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
 
     Set<RoleDto> toSetRoleDto(Set<Role> role);
+
     RoleDto toRoleDto(Role role);
 }

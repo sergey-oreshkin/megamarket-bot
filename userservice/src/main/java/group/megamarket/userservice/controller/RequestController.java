@@ -18,12 +18,12 @@ public class RequestController {
     private final RequestMapper requestMapper;
 
     @GetMapping
-    public List<RequestDto> getAllRequests(){
+    public List<RequestDto> getAllRequests() {
         return requestMapper.toListDto(requestService.findAll());
     }
 
     @PostMapping
-    public RequestRoleDto saveRequestRole(@RequestBody RequestRoleDto requestRole){
+    public RequestRoleDto saveRequestRole(@RequestBody RequestRoleDto requestRole) {
         return requestService.saveRequestRole(requestRole);
     }
 }

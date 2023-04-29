@@ -16,7 +16,7 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/users",
-                produces = "application/json")
+        produces = "application/json")
 public class UserController {
 
     private final UserService userService;
@@ -24,22 +24,22 @@ public class UserController {
     private final RoleMapper roleMapper;
 
     @GetMapping
-    public List<UserRoleDto> getUsers(){
+    public List<UserRoleDto> getUsers() {
         return userMapper.toListUserRoleDto(userService.findAllAdminAndSeller());
     }
 
     @GetMapping("/{id}")
-    public Set<RoleDto> getRoleUserById(@PathVariable(value = "id") Long id){
+    public Set<RoleDto> getRoleUserById(@PathVariable(value = "id") Long id) {
         return roleMapper.toSetRoleDto(userService.findRoleUserByUserId(id));
     }
 
     @PostMapping
-    public UserDto saveUser(@RequestBody UserDto userDto){
+    public UserDto saveUser(@RequestBody UserDto userDto) {
         return userService.save(userDto);
     }
 
     @PatchMapping
-    public UserDto updateUserRole(@RequestBody UserRequestRoleDto userRequestRoleDto){
+    public UserDto updateUserRole(@RequestBody UserRequestRoleDto userRequestRoleDto) {
         return userService.updateUserRole(userRequestRoleDto);
     }
 }
