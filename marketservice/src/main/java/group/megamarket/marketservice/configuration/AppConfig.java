@@ -21,7 +21,7 @@ public class AppConfig {
     @Bean
     public ModelMapper modelMapper() {
 
-        ModelMapper modelMapper =  new ModelMapper();
+        var modelMapper =  new ModelMapper();
 
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         TypeMap<OrderProduct, OrderProductDto> orderProductMap
@@ -33,11 +33,6 @@ public class AppConfig {
         });
 
         return modelMapper;
-    }
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 
 }

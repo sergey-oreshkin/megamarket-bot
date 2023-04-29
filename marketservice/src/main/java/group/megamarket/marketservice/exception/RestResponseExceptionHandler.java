@@ -11,13 +11,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(ForbiddenException.class)
-    @ResponseStatus(value = HttpStatus.FORBIDDEN)
-    public ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException exception) {
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException exception) {
         return new ResponseEntity<>(ErrorResponse.builder()
                                                  .errorMessage(exception.getMessage())
-                                                 .errorCode(HttpStatus.FORBIDDEN.toString())
-                                                 .build(), HttpStatus.FORBIDDEN);
+                                                 .errorCode(HttpStatus.BAD_REQUEST.toString())
+                                                 .build(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotFoundException.class)
