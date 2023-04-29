@@ -6,10 +6,13 @@ import group.megamarket.marketservice.entity.Order;
 import group.megamarket.marketservice.entity.OrderProduct;
 import group.megamarket.marketservice.entity.OrderProductPK;
 import group.megamarket.marketservice.entity.Status;
+import group.megamarket.marketservice.exception.BadRequestException;
 import group.megamarket.marketservice.exception.NotFoundException;
 import group.megamarket.marketservice.mapper.OrderMapper;
+import group.megamarket.marketservice.mapper.ProductMapper;
 import group.megamarket.marketservice.repo.OrderProductRepository;
 import group.megamarket.marketservice.repo.OrderRepository;
+import group.megamarket.marketservice.soap.StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,19 +28,13 @@ import java.util.HashSet;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
-
-    private final OrderMapper mapper;
+    private final StorageService storageService;
+    private final OrderMapper orderMapper;
+    private final ProductMapper productMapper;
 
     @Override
     public OrderResponse addProduct(OrderRequest orderRequest) {
         log.info("addProduct is called");
-
-        /*ProductDto productResponse = getProduct(orderRequest.getProductId());
-        if(productResponse.getCount() < orderRequest.getQuantity()){
-            log.error("Количество добавленного товара превышает количество товара на складе");
-            throw new BadRequestException("Количество добавленного товара превышает количество товара на складе");
-        }*/
-
         var order = orderRepository.findByUserIdAndStatus(orderRequest.getUserId(), Status.AWAITING_PAYMENT)
                                    .orElse(Order.builder()
                                                 .orderProducts(new HashSet<>())
@@ -67,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
         var savedOrder = orderRepository.save(order);
         log.info("Product added in order successfully");
 
-        return mapper.toOrderResponse(savedOrder);
+        return orderMapper.toOrderResponse(savedOrder);
     }
 
     @Override
@@ -81,21 +78,33 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("Order got successfully");
 
-        return mapper.toOrderResponse(order);
+        return orderMapper.toOrderResponse(order);
     }
 
     @Override
     public OrderResponse pay(Long userId) {
+        log.info("pay is called");
+
         var order = orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
                                    .orElseThrow(() -> new NotFoundException(
                                            String.format("Заказ пользователя с id=%s не найден", userId)
                                    ));
 
-        // запрос на количество товара на складе
-        // уменьшение количества товара на складе
+        var orderProducts = order.getOrderProducts();
+
+        var productsDto = productMapper.toProductDto(orderProducts.stream().toList());
+
+        try {
+            storageService.changeProductCountByBuyer(productsDto);
+        } catch (Exception e){
+            throw new BadRequestException("Ошибка при оплате заказа");
+        }
+
         order.setStatus(Status.PAID);
 
-        return mapper.toOrderResponse(order);
+        log.info("Order paid successfully");
+
+        return orderMapper.toOrderResponse(order);
     }
 
     @Override

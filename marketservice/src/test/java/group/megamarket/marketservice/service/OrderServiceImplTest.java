@@ -2,7 +2,6 @@ package group.megamarket.marketservice.service;
 
 
 import group.megamarket.marketservice.dto.OrderRequest;
-import group.megamarket.marketservice.dto.ProductDto;
 import group.megamarket.marketservice.entity.Order;
 import group.megamarket.marketservice.mapper.OrderMapper;
 import group.megamarket.marketservice.repo.OrderRepository;
@@ -31,7 +30,6 @@ class OrderServiceImplTest {
 
     private OrderRequest orderRequest;
     private Order order;
-    private ProductDto productDto;
 
     @BeforeEach
     public void setup() {
@@ -39,8 +37,6 @@ class OrderServiceImplTest {
 
         order = Order.builder()
                      .build();
-
-        productDto = new ProductDto(1L, "name", 10);
     }
 
     @Test
