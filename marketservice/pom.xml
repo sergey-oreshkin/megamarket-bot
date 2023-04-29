@@ -26,6 +26,7 @@
         <modelmapper.version>3.1.0</modelmapper.version>
         <junit.version>5.9.2</junit.version>
         <mockito.version>5.2.0</mockito.version>
+        <cfx.version>3.5.5</cfx.version>
     </properties>
 
     <dependencies>
@@ -92,6 +93,32 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-simple</artifactId>
+            <version>${cfx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cfx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-ri</artifactId>
+            <version>2.3.2</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 
@@ -163,6 +190,25 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <wsdlUrls>
+                        <!--тут надо указать адрес где брать wsdl-->
+                        <wsdlUrl>http://localhost:8000/soap?wsdl</wsdlUrl>
+                    </wsdlUrls>
+                    <!--либо можно взять wsdl из файла-->
+                    <!--                    <wsdlFiles>-->
+                    <!--                        <wsdlFile>тут путь до файла</wsdlFile>-->
+                    <!--                    </wsdlFiles>-->
+                    <keep>true</keep>
+                    <!--тут надо указать пакет в который будут помещены классы-->
+                    <packageName>group.megamarket.marketservice.soap</packageName>
+                    <sourceDestDir>src/main/java</sourceDestDir>
+                </configuration>
             </plugin>
         </plugins>
     </build>
