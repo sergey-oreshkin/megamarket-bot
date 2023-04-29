@@ -96,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 
         try {
             storageService.changeProductCountByBuyer(productsDto);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new BadRequestException("Ошибка при оплате заказа");
         }
 

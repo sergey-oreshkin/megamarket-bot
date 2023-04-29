@@ -1,6 +1,5 @@
 package group.megamarket.marketservice.dto;
 
-import group.megamarket.marketservice.entity.OrderProduct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

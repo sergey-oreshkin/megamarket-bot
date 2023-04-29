@@ -6,13 +6,11 @@ import group.megamarket.marketservice.soap.ProductDto;
 import group.megamarket.marketservice.soap.StorageService;
 import group.megamarket.marketservice.soap.StorageServiceImplService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import javax.xml.ws.Service;
 import javax.xml.namespace.QName;
 import java.net.MalformedURLException;
 import java.net.URL;

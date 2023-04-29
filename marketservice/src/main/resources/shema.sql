@@ -12,5 +12,5 @@ CREATE TABLE IF NOT EXISTS order_product
     product_id BIGINT NOT NULL,
     quantity   INT    NOT NULL check ( quantity >= 0 ),
     constraint pk primary key (order_id, product_id),
-    constraint order_id foreign key (order_id) references orders(id)
+    constraint order_id foreign key (order_id) references orders (id)
 );
