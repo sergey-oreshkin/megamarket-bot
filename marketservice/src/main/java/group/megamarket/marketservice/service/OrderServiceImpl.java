@@ -52,10 +52,7 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrder(Long userId) {
         log.info("getOrder is called");
 
-        var order = orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
-                                   .orElseThrow(() -> new NotFoundException(
-                                           String.format("Заказ пользователя с id=%s не найден", userId)
-                                   ));
+        var order = getOrderOrElseThrow(userId);
 
         log.info("Order got successfully");
 
@@ -66,16 +63,14 @@ public class OrderServiceImpl implements OrderService {
     public Order pay(Long userId) {
         log.info("pay is called");
 
-        var order = orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
-                                   .orElseThrow(() -> new NotFoundException(
-                                           String.format("Заказ пользователя с id=%s не найден", userId)
-                                   ));
+        var order = getOrderOrElseThrow(userId);
 
         var productsDto = productMapper.toProductDto(List.copyOf(order.getOrderProducts()));
 
         try {
             storageService.changeProductCountByBuyer(productsDto);
         } catch (Exception e) {
+            log.error("Error when paying order user_id={userId}");
             throw new BadRequestException("Ошибка при оплате заказа");
         }
 
@@ -90,7 +85,12 @@ public class OrderServiceImpl implements OrderService {
     public void deleteProduct(Long userId, Long productId) {
         log.info("deleteProduct is called");
 
-        orderProductRepository.deleteOrderProductByProductId(productId, userId);
+        int result = orderProductRepository.deleteOrderProductByProductId(productId, userId);
+
+        if (result != 1) {
+            log.error("Error when deleting a product with id={productId}");
+            throw new NotFoundException("Ошибка при удалении продукта id=" + productId);
+        }
 
         log.info("Product deleted successfully");
     }
@@ -99,7 +99,12 @@ public class OrderServiceImpl implements OrderService {
     public void clear(Long userId) {
         log.info("clear is called");
 
-        orderRepository.deleteByUserId(userId);
+        int result = orderRepository.deleteByUserId(userId);
+
+        if (result != 1) {
+            log.error("Error when deleting a user's order with user_id={userId}");
+            throw new NotFoundException("Ошибка при удалении заказ пользователя id=" + userId);
+        }
 
         log.info("Order cleared successfully");
     }
@@ -121,5 +126,15 @@ public class OrderServiceImpl implements OrderService {
                                            .orderDate(LocalDate.now())
                                            .status(Status.AWAITING_PAYMENT)
                                            .build());
+    }
+
+    private Order getOrderOrElseThrow(Long userId) {
+        return orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
+                              .orElseThrow(() -> {
+                                  log.error("user_id={userId} order was not found");
+                                  throw new NotFoundException(
+                                          String.format("Заказ пользователя с id=%s не найден", userId)
+                                  );
+                              });
     }
 }

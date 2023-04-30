@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface OrderProductRepository extends JpaRepository<OrderProduct, OrderProductPK> {
     @Modifying
     @Query(value = "DELETE FROM order_product WHERE order_id IN ( SELECT id FROM orders WHERE user_id = ?2 ) AND product_id = ?1", nativeQuery = true)
-    void deleteOrderProductByProductId(Long productId, Long userId);
+    int deleteOrderProductByProductId(Long productId, Long userId);
 
 }
