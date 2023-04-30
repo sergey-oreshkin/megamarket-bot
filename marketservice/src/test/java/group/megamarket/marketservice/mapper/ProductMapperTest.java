@@ -50,7 +50,6 @@ class ProductMapperTest {
 
         var productsDto = mapper.toProductDto(orderProducts);
 
-        // then it maps by default
         assertEquals(orderProduct.getPk().getProductId(), productsDto.get(0).getId());
         assertEquals(orderProduct.getQuantity(), productsDto.get(0).getCount());
     }

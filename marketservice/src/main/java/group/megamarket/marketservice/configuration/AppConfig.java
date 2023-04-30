@@ -37,10 +37,11 @@ public class AppConfig {
         });
 
         var orderRequestDtoMapOrderProduct = modelMapper.typeMap(OrderRequestDto.class, OrderProduct.class);
-        orderRequestDtoMapOrderProduct.addMapping(OrderRequestDto::getQuantity, OrderProduct::setQuantity);
-
-        var orderRequestDtoMapOrderProductPK = modelMapper.typeMap(OrderRequestDto.class, OrderProductPK.class);
-        orderRequestDtoMapOrderProductPK.addMapping(OrderRequestDto::getProductId, OrderProductPK::setProductId);
+        orderRequestDtoMapOrderProduct.addMappings(mapping -> {
+            mapping.map(OrderRequestDto::getQuantity, OrderProduct::setQuantity);
+            mapping.using(context -> new OrderProductPK(null, (Long) context.getSource()))
+                   .map(OrderRequestDto::getProductId, OrderProduct::setPk);
+        });
 
         var orderProductMapToProductDto = modelMapper.typeMap(OrderProduct.class, ProductDto.class);
         orderProductMapToProductDto.addMappings(mapping -> {
