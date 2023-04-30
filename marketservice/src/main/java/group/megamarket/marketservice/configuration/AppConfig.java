@@ -17,13 +17,22 @@ import javax.xml.namespace.QName;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Конфигурационный класс приложения для создания и настройки бинов.
+ *
+ * @author Eldar
+ */
 @Configuration
 @PropertySource("classpath:/application.properties")
 public class AppConfig {
 
+    /**
+     * Создает экземпляр ModelMapper и настраивает его конфигурацию.
+     *
+     * @return ModelMapper
+     */
     @Bean
     public ModelMapper modelMapper() {
-
         var modelMapper = new ModelMapper();
 
         modelMapper.getConfiguration()
@@ -52,12 +61,14 @@ public class AppConfig {
         return modelMapper;
     }
 
+    /**
+     * @return объект StorageService
+     * @throws MalformedURLException если URL-адрес некорректен
+     */
     @Bean
     public StorageService storageService() throws MalformedURLException {
         var serviceQName = new QName("http://localhost:8000/soap", "StorageServiceImplService");
         var service = StorageServiceImplService.create(new URL("http://localhost:8000/soap?wsdl"), serviceQName);
         return service.getPort(StorageService.class);
     }
-
-
 }

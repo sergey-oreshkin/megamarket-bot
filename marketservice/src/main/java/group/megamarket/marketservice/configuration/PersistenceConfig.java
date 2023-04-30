@@ -15,6 +15,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Конфигурационный класс для подключения к базе данных и настройки управления транзакциями и JPA
+ *
+ * @author Eldar
+ */
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "group.megamarket.marketservice")
@@ -26,6 +31,11 @@ public class PersistenceConfig {
         this.environment = environment;
     }
 
+    /**
+     * Создает и настраивает объект DriverManagerDataSource
+     *
+     * @return DataSource
+     */
     @Bean
     public DataSource dataSource() {
         var dataSource = new DriverManagerDataSource();
@@ -36,6 +46,12 @@ public class PersistenceConfig {
         return dataSource;
     }
 
+    /**
+     * Создает и настраивает объект LocalContainerEntityManagerFactoryBean, который представляет собой фабрику сущностей JPA
+     *
+     * @param dataSource
+     * @return объект LocalContainerEntityManagerFactoryBean
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         final var emf = new LocalContainerEntityManagerFactoryBean();
@@ -49,13 +65,18 @@ public class PersistenceConfig {
         return emf;
     }
 
+    /**
+     * Создает и настраивает объект JpaTransactionManager, который представляет собой менеджер транзакций
+     *
+     * @param entityManagerFactory
+     * @return объект JpaTransactionManager
+     */
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         var transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
-
 
     private Properties hibernateProperties() {
         var properties = new Properties();
