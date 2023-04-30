@@ -11,5 +11,4 @@ public interface OrderProductRepository extends JpaRepository<OrderProduct, Orde
     @Query(value = "DELETE FROM order_product WHERE order_id IN ( SELECT id FROM orders WHERE user_id = ?2 ) AND product_id = ?1", nativeQuery = true)
     void deleteOrderProductByProductId(Long productId, Long userId);
 
-
 }

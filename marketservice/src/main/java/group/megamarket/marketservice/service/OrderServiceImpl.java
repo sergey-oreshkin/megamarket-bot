@@ -1,14 +1,10 @@
 package group.megamarket.marketservice.service;
 
-import group.megamarket.marketservice.dto.OrderRequest;
-import group.megamarket.marketservice.dto.OrderResponse;
 import group.megamarket.marketservice.entity.Order;
 import group.megamarket.marketservice.entity.OrderProduct;
-import group.megamarket.marketservice.entity.OrderProductPK;
 import group.megamarket.marketservice.entity.Status;
 import group.megamarket.marketservice.exception.BadRequestException;
 import group.megamarket.marketservice.exception.NotFoundException;
-import group.megamarket.marketservice.mapper.OrderMapper;
 import group.megamarket.marketservice.mapper.ProductMapper;
 import group.megamarket.marketservice.repo.OrderProductRepository;
 import group.megamarket.marketservice.repo.OrderRepository;
@@ -20,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,46 +27,29 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
     private final StorageService storageService;
-    private final OrderMapper orderMapper;
     private final ProductMapper productMapper;
 
-    @Override
-    public OrderResponse addProduct(OrderRequest orderRequest) {
-        log.info("addProduct is called");
-        var order = orderRepository.findByUserIdAndStatus(orderRequest.getUserId(), Status.AWAITING_PAYMENT)
-                                   .orElse(Order.builder()
-                                                .orderProducts(new HashSet<>())
-                                                .userId(orderRequest.getUserId())
-                                                .orderDate(LocalDate.now())
-                                                .status(Status.AWAITING_PAYMENT)
-                                                .build());
 
-        var newOrderProduct = OrderProduct.builder()
-                                          .pk(OrderProductPK.builder()
-                                                            .productId(orderRequest.getProductId())
-                                                            .build())
-                                          .quantity(orderRequest.getQuantity())
-                                          .build();
+    @Override
+    public Order addProduct(OrderProduct newOrderProduct, Long userId) {
+        log.info("addProduct is called");
+        var order = getOrCreateOrder(userId);
 
         var orderProduct = order.getOrderProducts()
                                 .stream()
                                 .filter(op -> op.equals(newOrderProduct))
                                 .findFirst();
 
-        if (orderProduct.isPresent()) {
-            orderProduct.get().setQuantity(orderProduct.get().getQuantity() + newOrderProduct.getQuantity());
-        } else {
-            order.getOrderProducts().add(newOrderProduct);
-        }
+        addQuantity(newOrderProduct, order, orderProduct);
 
         var savedOrder = orderRepository.save(order);
         log.info("Product added in order successfully");
 
-        return orderMapper.toOrderResponse(savedOrder);
+        return savedOrder;
     }
 
     @Override
-    public OrderResponse getOrder(Long userId) {
+    public Order getOrder(Long userId) {
         log.info("getOrder is called");
 
         var order = orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
@@ -78,11 +59,11 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("Order got successfully");
 
-        return orderMapper.toOrderResponse(order);
+        return order;
     }
 
     @Override
-    public OrderResponse pay(Long userId) {
+    public Order pay(Long userId) {
         log.info("pay is called");
 
         var order = orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
@@ -90,9 +71,7 @@ public class OrderServiceImpl implements OrderService {
                                            String.format("Заказ пользователя с id=%s не найден", userId)
                                    ));
 
-        var orderProducts = order.getOrderProducts();
-
-        var productsDto = productMapper.toProductDto(orderProducts.stream().toList());
+        var productsDto = productMapper.toProductDto(List.copyOf(order.getOrderProducts()));
 
         try {
             storageService.changeProductCountByBuyer(productsDto);
@@ -104,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("Order paid successfully");
 
-        return orderMapper.toOrderResponse(order);
+        return order;
     }
 
     @Override
@@ -123,5 +102,24 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteByUserId(userId);
 
         log.info("Order cleared successfully");
+    }
+
+
+    private void addQuantity(OrderProduct newOrderProduct, Order order, Optional<OrderProduct> orderProduct) {
+        if (orderProduct.isPresent()) {
+            orderProduct.get().setQuantity(orderProduct.get().getQuantity() + newOrderProduct.getQuantity());
+        } else {
+            order.getOrderProducts().add(newOrderProduct);
+        }
+    }
+
+    private Order getOrCreateOrder(Long userId) {
+        return orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
+                              .orElse(Order.builder()
+                                           .orderProducts(new HashSet<>())
+                                           .userId(userId)
+                                           .orderDate(LocalDate.now())
+                                           .status(Status.AWAITING_PAYMENT)
+                                           .build());
     }
 }

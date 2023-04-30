@@ -1,14 +1,14 @@
 package group.megamarket.marketservice.service;
 
-import group.megamarket.marketservice.dto.OrderRequest;
-import group.megamarket.marketservice.dto.OrderResponse;
+import group.megamarket.marketservice.entity.Order;
+import group.megamarket.marketservice.entity.OrderProduct;
 
 public interface OrderService {
-    OrderResponse addProduct(OrderRequest orderRequest);
+    Order addProduct(OrderProduct orderProduct, Long userId);
 
-    OrderResponse getOrder(Long userId);
+    Order getOrder(Long userId);
 
-    OrderResponse pay(Long userId);
+    Order pay(Long userId);
 
     void deleteProduct(Long userId, Long productId);
 

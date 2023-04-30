@@ -1,8 +1,9 @@
 package group.megamarket.marketservice.controller;
 
 
-import group.megamarket.marketservice.dto.OrderRequest;
-import group.megamarket.marketservice.dto.OrderResponse;
+import group.megamarket.marketservice.dto.OrderRequestDto;
+import group.megamarket.marketservice.dto.OrderResponseDto;
+import group.megamarket.marketservice.mapper.OrderMapper;
 import group.megamarket.marketservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,22 +14,30 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/carts")
 public class OrderController {
-
     private final OrderService service;
+    private final OrderMapper orderMapper;
 
     @PutMapping
-    public OrderResponse addProduct(@RequestBody OrderRequest orderRequest) {
-        return service.addProduct(orderRequest);
+    public OrderResponseDto addProduct(@RequestBody OrderRequestDto orderRequestDto) {
+        var orderProduct = orderMapper.toOrderProduct(orderRequestDto);
+
+        var order = service.addProduct(orderProduct, orderRequestDto.getUserId());
+
+        return orderMapper.toOrderResponse(order);
     }
 
     @GetMapping("/users/{userId}")
-    public OrderResponse getOrder(@PathVariable Long userId) {
-        return service.getOrder(userId);
+    public OrderResponseDto getOrder(@PathVariable Long userId) {
+        var order = service.getOrder(userId);
+
+        return orderMapper.toOrderResponse(order);
     }
 
     @PostMapping("/users/{userId}")
-    public OrderResponse pay(@PathVariable Long userId) {
-        return service.pay(userId);
+    public OrderResponseDto pay(@PathVariable Long userId) {
+        var order = service.pay(userId);
+
+        return orderMapper.toOrderResponse(order);
     }
 
     @DeleteMapping("/users/{userId}/products/{productId}")

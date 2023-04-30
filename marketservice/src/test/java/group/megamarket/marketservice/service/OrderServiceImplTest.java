@@ -1,7 +1,7 @@
 package group.megamarket.marketservice.service;
 
 
-import group.megamarket.marketservice.dto.OrderRequest;
+import group.megamarket.marketservice.dto.OrderRequestDto;
 import group.megamarket.marketservice.entity.Order;
 import group.megamarket.marketservice.mapper.OrderMapper;
 import group.megamarket.marketservice.repo.OrderRepository;
@@ -26,12 +26,12 @@ class OrderServiceImplTest {
     @InjectMocks
     private OrderServiceImpl orderService;
 
-    private OrderRequest orderRequest;
+    private OrderRequestDto orderRequestDto;
     private Order order;
 
     @BeforeEach
     public void setup() {
-        orderRequest = new OrderRequest(1L, 10, 1L);
+        orderRequestDto = new OrderRequestDto(1L, 10, 1L);
 
         order = Order.builder()
                      .build();
@@ -45,10 +45,10 @@ class OrderServiceImplTest {
         order.setOrderDate(LocalDate.now());
 
         when(restTemplate.getForObject(anyString(), any())).thenReturn(productDto);
-        when(mapper.toOrderProduct(orderRequest)).thenReturn(order);
+        when(mapper.toOrderProduct(orderRequestDto)).thenReturn(order);
         when(repository.save(order)).thenReturn(savedOrder);
 
-        OrderResponse orderResponse = orderService.addProduct(orderRequest);
+        OrderResponseDto orderResponse = orderService.addProduct(orderRequestDto);
 
         verify(repository, times(1)).save(savedOrder);*/
     }

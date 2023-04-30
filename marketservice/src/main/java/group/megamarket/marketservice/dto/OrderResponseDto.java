@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderResponse implements Serializable {
+public class OrderResponseDto implements Serializable {
     @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate orderDate;
     private Long userId;
