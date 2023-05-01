@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class OrderRequest {
+public class OrderRequestDto {
 
     private Long productId;
 

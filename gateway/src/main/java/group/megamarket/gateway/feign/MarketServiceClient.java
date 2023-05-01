@@ -1,8 +1,8 @@
 package group.megamarket.gateway.feign;
 
 
-import group.megamarket.gateway.dto.market.OrderRequest;
-import group.megamarket.gateway.dto.market.OrderResponse;
+import group.megamarket.gateway.dto.market.OrderRequestDto;
+import group.megamarket.gateway.dto.market.OrderResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * Клиент для доступа к marketService
  */
-
-@FeignClient(value = "marketService", url = "http://localhost:8081/")
+@FeignClient(value = "marketService", url = "${market-service.url}")
 public interface MarketServiceClient {
 
     @PutMapping("/carts")
-    OrderRequest addProduct(@RequestBody OrderRequest orderRequest);
+    OrderRequestDto addProduct(@RequestBody OrderRequestDto orderRequestDto);
 
     @GetMapping("/users")
-    OrderResponse getOrder(@PathVariable Long userId);
+    OrderResponseDto getOrder(@PathVariable Long userId);
 
     @PostMapping("/users")
-    OrderResponse pay(@PathVariable Long userId);
+    OrderResponseDto pay(@PathVariable Long userId);
 
     @DeleteMapping("/users")
     void clear(@PathVariable Long userId);

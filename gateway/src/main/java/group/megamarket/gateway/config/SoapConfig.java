@@ -10,6 +10,9 @@ import javax.xml.ws.Service;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Класс для конфигурации soap сервиса
+ */
 @Configuration
 public class SoapConfig {
 

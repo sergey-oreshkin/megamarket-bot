@@ -20,7 +20,6 @@ import static group.megamarket.gateway.component.BotCommands.LIST_OF_COMMANDS;
 /**
  * Контроллер для работы endpoints
  */
-
 @Slf4j
 @Component
 public class Bot extends TelegramLongPollingBot {
@@ -56,10 +55,11 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String messageText = update.getMessage().getText();
+            String[] splitMessage = messageText.split(" ");
             long chatId = update.getMessage().getChatId();
-            String message = handlers.get(messageText);
+            String message = handlers.get(splitMessage[0]);
             if (message == null) {
-                sendResponse(chatId, "Uncorrected message");
+                sendResponse(chatId, "Некорректная команда, введите /help для ознакомления со списком команд");
                 return;
             }
             Handler handler = (Handler) context.getBean(message);

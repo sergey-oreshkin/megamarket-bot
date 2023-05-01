@@ -4,10 +4,13 @@ import group.megamarket.gateway.handler.Handler;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+/**
+ * Класс для обработки /help запроса
+ */
 @Component
 public class HelpHandler implements Handler {
 
-    private final String HELP_TEXT = "Команды общие\n" +
+    private static String HELP_TEXT = "Команды общие\n" +
             "/list - список всех товаров\n" +
             "/buy (id) - добавить товар с данным идентификатором в корзину\n" +
             "/cart - посмотреть свою корзину\n" +
@@ -21,7 +24,7 @@ public class HelpHandler implements Handler {
             "Команды админа\n" +
             "/all - список всех пользователей с правами админа или продавца\n" +
             "/requests - список всех заявок на роль админа или продавца\n" +
-            "/set (username role) - установить пользователю с именем username роль role. Если роль не указана - удалить все роли у данного пользователя.\n" +
+            "/set (id role) - установить пользователю с id роль role. Если роль не указана - удалить все роли у данного пользователя.\n" +
             "/inventory (username) - список товаров продавца с именем username";
 
     @Override

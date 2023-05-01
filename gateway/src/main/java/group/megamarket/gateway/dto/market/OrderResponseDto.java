@@ -18,13 +18,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class OrderResponse {
+public class OrderResponseDto {
 
     private LocalDate orderDate;
 
     private Long userId;
 
-    private Status status;
+    private StatusDto statusDto;
 
     private List<OrderProductDto> orderProducts;
 

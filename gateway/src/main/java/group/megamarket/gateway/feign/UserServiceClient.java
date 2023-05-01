@@ -28,7 +28,7 @@ public interface UserServiceClient {
     @GetMapping("/users")
     List<UserRoleDto> getUsers();
 
-    @GetMapping("/request")
+    @GetMapping("/requests")
     List<RequestDto> getAllRequests();
 
     @PatchMapping("/users")
