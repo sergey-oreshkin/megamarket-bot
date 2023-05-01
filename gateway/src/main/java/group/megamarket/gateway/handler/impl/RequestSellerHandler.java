@@ -5,9 +5,11 @@ import group.megamarket.gateway.dto.user.RoleEnum;
 import group.megamarket.gateway.feign.UserServiceClient;
 import group.megamarket.gateway.handler.Handler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RequestSellerHandler implements Handler {
@@ -22,6 +24,7 @@ public class RequestSellerHandler implements Handler {
                 .id(userId)
                 .roleEnum(RoleEnum.SELLER)
                 .build();
+        log.info(requestRoleDto.toString());
         client.saveRequestRole(requestRoleDto);
         return "Запрос на роль продавца произведен";
     }

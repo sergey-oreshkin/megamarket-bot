@@ -16,7 +16,7 @@ public class ListHandler implements Handler {
     @Override
     public String handle(Update update) {
         return "Список всех товаров магазина \n"
-                +storageService.toString();
+                +storageService.getAll().toString();
     }
 }
 
