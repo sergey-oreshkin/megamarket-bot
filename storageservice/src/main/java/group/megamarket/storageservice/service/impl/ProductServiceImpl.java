@@ -28,10 +28,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     /**
-     *
-     * @param userId - id юзера
+     * @param userId      - id юзера
      * @param productName - название продукта
-     * @param difference - на сколько изменить количество(может быть отрицательным, чтоб уменьшить)
+     * @param difference  - на сколько изменить количество(может быть отрицательным, чтоб уменьшить)
      * @return Product c измененным количеством
      */
     @Override
@@ -51,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * Уменьшает количество каждого продукта в списке на величину установленную в ProductDto#count
+     *
      * @param products - список продуктов у которых надо изменить количество.
      */
     @Override

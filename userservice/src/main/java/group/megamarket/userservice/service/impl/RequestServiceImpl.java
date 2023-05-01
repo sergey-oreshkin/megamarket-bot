@@ -32,16 +32,18 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestRoleDto saveRequestRole(RequestRoleDto requestRole) {
-        User user = userRepository.findById(requestRole.getUserId()).orElseThrow(()-> new UserNotFoundException("There is no such user"));
+        User user = userRepository.findById(requestRole.getUserId()).orElseThrow(() -> new UserNotFoundException("There is no such user"));
         Role role = roleRepository.findByRoleEnum(requestRole.getRoleDto().getRoleEnum());
 
-        //it's right?
-        if(user.getRoles() == null) user.setRoles(new HashSet<>());
+        if (user.getRoles() == null) user.setRoles(new HashSet<>());
 
         if (user.getRoles().contains(role)) {
             return requestRole;
-        }else {
-            return requestMapper.toRequestRoleDto(repository.save(requestMapper.toRequest(requestRole)));
+        } else {
+            Request request = requestMapper.toRequest(requestRole);
+            request.setUser(user);
+            request.setRole(role);
+            return requestMapper.toRequestRoleDto(repository.save(request));
         }
     }
 }

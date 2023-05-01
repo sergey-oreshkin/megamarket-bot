@@ -23,6 +23,7 @@ public class ApplicationConfig {
 
     /**
      * Rest Template с установлееным базовым адресом юзер сервиса
+     *
      * @return RestTemplate
      */
     @Bean

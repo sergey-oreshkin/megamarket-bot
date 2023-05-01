@@ -28,8 +28,9 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Проверяет есть ли у юзера данная роль, если нет, кидает эксепшен
+     *
      * @param userId - id юзера
-     * @param role - роль
+     * @param role   - роль
      * @throws UserNotFoundException при любых непонятках
      */
     @Override

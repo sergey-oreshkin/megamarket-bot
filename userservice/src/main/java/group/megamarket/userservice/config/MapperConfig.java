@@ -11,17 +11,17 @@ import org.springframework.context.annotation.Configuration;
 public class MapperConfig {
 
     @Bean
-    public UserMapper userMapper(){
+    public UserMapper userMapper() {
         return Mappers.getMapper(UserMapper.class);
     }
 
     @Bean
-    public RequestMapper requestMapper(){
+    public RequestMapper requestMapper() {
         return Mappers.getMapper(RequestMapper.class);
     }
 
     @Bean
-    public RoleMapper roleMapper(){
+    public RoleMapper roleMapper() {
         return Mappers.getMapper(RoleMapper.class);
     }
 }
