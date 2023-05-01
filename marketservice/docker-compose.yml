@@ -7,7 +7,7 @@ services:
     ports:
       - "8081:8085"
     environment:
-      - DATASOURCE_URL=jdbc:postgresql://market-bd:5432/storage
+      - DATASOURCE_URL=jdbc:postgresql://market-bd:5432/market
       - DATASOURCE_USERNAME=postgres
       - DATASOURCE_PASSWORD=443966
   market-bd:
