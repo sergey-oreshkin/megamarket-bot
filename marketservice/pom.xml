@@ -204,6 +204,13 @@
                                         implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>META-INF/cxf/bus-extensions.txt</resource>
                                 </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>group.megamarket.marketservice.Market</Main-Class>
+                                        <Multi-Release>true</Multi-Release>
+                                    </manifestEntries>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>
                         </configuration>
                     </execution>
@@ -215,15 +222,9 @@
                 <version>2.6</version>
                 <configuration>
                     <wsdlUrls>
-                        <!--тут надо указать адрес где брать wsdl-->
                         <wsdlUrl>http://localhost:8000/soap?wsdl</wsdlUrl>
                     </wsdlUrls>
-                    <!--либо можно взять wsdl из файла-->
-                    <!--                    <wsdlFiles>-->
-                    <!--                        <wsdlFile>тут путь до файла</wsdlFile>-->
-                    <!--                    </wsdlFiles>-->
                     <keep>true</keep>
-                    <!--тут надо указать пакет в который будут помещены классы-->
                     <packageName>group.megamarket.marketservice.soap</packageName>
                     <sourceDestDir>src/main/java</sourceDestDir>
                 </configuration>
