@@ -68,7 +68,7 @@ public class AppConfig {
     @Bean
     public StorageService storageService() throws MalformedURLException {
         var serviceQName = new QName("http://localhost:8000/soap", "StorageServiceImplService");
-        var service = StorageServiceImplService.create(new URL("http://localhost:8000/soap?wsdl"), serviceQName);
+        var service = StorageServiceImplService.create(new URL("http://storage:8000/soap?wsdl"), serviceQName);
         return service.getPort(StorageService.class);
     }
 }
