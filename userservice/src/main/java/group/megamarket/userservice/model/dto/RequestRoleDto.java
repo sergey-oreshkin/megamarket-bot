@@ -10,4 +10,11 @@ import lombok.NoArgsConstructor;
 public class RequestRoleDto {
     private Long userId;
     private RoleDto roleDto;
+
+    @Override
+    public String toString() {
+        return "RequestRoleDto: " +
+                "userId = " + userId +
+                ", roleDto = " + roleDto;
+    }
 }

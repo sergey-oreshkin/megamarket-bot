@@ -11,4 +11,11 @@ import lombok.NoArgsConstructor;
 public class RoleDto {
     private Long id;
     private RoleEnum roleEnum;
+
+    @Override
+    public String toString() {
+        return "RoleDto: " +
+                "id = " + id +
+                ", roleEnum = " + roleEnum;
+    }
 }

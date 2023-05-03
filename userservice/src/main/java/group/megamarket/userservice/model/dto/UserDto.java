@@ -10,4 +10,11 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private Long id;
     private String username;
+
+    @Override
+    public String toString() {
+        return "UserDto: " +
+                "id = " + id +
+                ", username = " + username;
+    }
 }

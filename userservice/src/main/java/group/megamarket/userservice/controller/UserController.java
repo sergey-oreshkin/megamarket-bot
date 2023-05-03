@@ -8,11 +8,16 @@ import group.megamarket.userservice.model.dto.UserRequestRoleDto;
 import group.megamarket.userservice.model.dto.UserRoleDto;
 import group.megamarket.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Контроллер для работы c user endpoints
+ */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/users",
@@ -25,21 +30,32 @@ public class UserController {
 
     @GetMapping
     public List<UserRoleDto> getUsers() {
-        return userMapper.toListUserRoleDto(userService.findAllAdminAndSeller());
+        List<UserRoleDto> userRoleDtos = userMapper.toListUserRoleDto(userService.findAllAdminAndSeller());
+        log.info("received userRoleDtos: " + userRoleDtos);
+        return userRoleDtos;
     }
 
     @GetMapping("/{id}")
     public Set<RoleDto> getRoleUserById(@PathVariable(value = "id") Long id) {
-        return roleMapper.toSetRoleDto(userService.findRoleUserByUserId(id));
+        log.info("userId: " + id);
+        Set<RoleDto> roleDtos = roleMapper.toSetRoleDto(userService.findRoleUserByUserId(id));
+        log.info("get roleDto: " + roleDtos);
+        return roleDtos;
     }
 
     @PostMapping
     public UserDto saveUser(@RequestBody UserDto userDto) {
-        return userService.save(userDto);
+        log.info("save user. UserDto: " + userDto);
+        UserDto savedUserDto = userService.save(userDto);
+        log.info("user saved. savedUser: " + savedUserDto);
+        return savedUserDto;
     }
 
     @PatchMapping
     public UserDto updateUserRole(@RequestBody UserRequestRoleDto userRequestRoleDto) {
-        return userService.updateUserRole(userRequestRoleDto);
+        log.info("incoming userRequestRoleDto: " + userRequestRoleDto);
+        UserDto userDto = userService.updateUserRole(userRequestRoleDto);
+        log.info("updated userDto: " + userDto);
+        return userDto;
     }
 }
