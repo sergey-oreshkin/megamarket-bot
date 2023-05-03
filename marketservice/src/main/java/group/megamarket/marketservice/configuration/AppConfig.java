@@ -1,9 +1,6 @@
 package group.megamarket.marketservice.configuration;
 
-import group.megamarket.marketservice.dto.OrderProductDto;
-import group.megamarket.marketservice.dto.OrderRequestDto;
 import group.megamarket.marketservice.entity.OrderProduct;
-import group.megamarket.marketservice.entity.OrderProductPK;
 import group.megamarket.marketservice.soap.ProductDto;
 import group.megamarket.marketservice.soap.StorageService;
 import group.megamarket.marketservice.soap.StorageServiceImplService;
@@ -37,24 +34,12 @@ public class AppConfig {
 
         modelMapper.getConfiguration()
                    .setMatchingStrategy(MatchingStrategies.STRICT)
-                   .setSkipNullEnabled(true);
-
-        var orderProductMap = modelMapper.typeMap(OrderProduct.class, OrderProductDto.class);
-        orderProductMap.addMappings(mapping -> {
-            mapping.map(op -> op.getPk().getProductId(), OrderProductDto::setProductId);
-            mapping.map(OrderProduct::getQuantity, OrderProductDto::setQuantity);
-        });
-
-        var orderRequestDtoMapOrderProduct = modelMapper.typeMap(OrderRequestDto.class, OrderProduct.class);
-        orderRequestDtoMapOrderProduct.addMappings(mapping -> {
-            mapping.map(OrderRequestDto::getQuantity, OrderProduct::setQuantity);
-            mapping.using(context -> new OrderProductPK(null, (Long) context.getSource()))
-                   .map(OrderRequestDto::getProductId, OrderProduct::setPk);
-        });
+                   .setSkipNullEnabled(true)
+                   .setFieldMatchingEnabled(true);
 
         var orderProductMapToProductDto = modelMapper.typeMap(OrderProduct.class, ProductDto.class);
         orderProductMapToProductDto.addMappings(mapping -> {
-            mapping.map(op -> op.getPk().getProductId(), ProductDto::setId);
+            mapping.map(OrderProduct::getProductId, ProductDto::setId);
             mapping.map(OrderProduct::getQuantity, ProductDto::setCount);
         });
 

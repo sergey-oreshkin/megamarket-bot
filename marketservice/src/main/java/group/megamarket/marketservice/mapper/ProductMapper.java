@@ -1,5 +1,6 @@
 package group.megamarket.marketservice.mapper;
 
+import group.megamarket.marketservice.dto.OrderProductDto;
 import group.megamarket.marketservice.entity.OrderProduct;
 import group.megamarket.marketservice.soap.ProductDto;
 import lombok.RequiredArgsConstructor;
@@ -20,5 +21,4 @@ public class ProductMapper {
                            .map(op -> mapper.map(op, ProductDto.class))
                            .collect(Collectors.toList());
     }
-
 }
