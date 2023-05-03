@@ -31,7 +31,7 @@ public class PayHandler implements Handler {
             return userName + ", ваша корзина оплачена\n"
                     + pay;
         } catch (FeignException e) {
-            log.error("Feign error /pay method");
+            log.error("Feign error /pay method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке оплатить коризну";
         }
     }

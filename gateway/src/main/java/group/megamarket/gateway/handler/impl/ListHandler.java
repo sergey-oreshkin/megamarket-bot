@@ -27,10 +27,11 @@ public class ListHandler implements Handler {
             log.info("Start work /list method");
             List<ProductDto> all = storageService.getAll();
             log.info("List all ProductDto={}", all);
+            log.info("Send correctly /list method response");
             return "Список всех товаров магазина \n"
                     + all;
         } catch (ServerSOAPFaultException e) {
-            log.error("Soap server error /list method");
+            log.error("Soap server error /list method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке получить список всех товаров магазина";
         }
     }

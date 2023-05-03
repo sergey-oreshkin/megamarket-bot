@@ -30,11 +30,11 @@ public class AddHandler implements Handler {
             log.info("Send correctly /add method response");
             return arrParams[1] + " в количестве " + arrParams[2] + "добавлен";
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            log.error("Validation error /add method");
+            log.error("Validation error /add method: {}", e.getMessage(), e);
             return "Ошибка валидации, введите в верном формате\n" +
                     "Например,  /add carrot 2";
         } catch (ServerSOAPFaultException e) {
-            log.error("Soap server error /add method");
+            log.error("Soap server error /add method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке добавить товар";
         }
     }

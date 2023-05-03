@@ -27,9 +27,10 @@ public class RequestHandler implements Handler {
             log.info("Start work /requests method");
             List<RequestDto> allRequests = client.getAllRequests();
             log.info("List<RequestDto>={}", allRequests);
+            log.info("Send correctly /request method response");
             return "Список всех запросов \n" + allRequests;
         } catch (FeignException e) {
-            log.error("Error work /requests method");
+            log.error("Error work /requests method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке получить список всех запросов";
         }
     }

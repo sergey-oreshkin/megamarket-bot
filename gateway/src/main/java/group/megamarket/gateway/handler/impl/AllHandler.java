@@ -27,9 +27,10 @@ public class AllHandler implements Handler {
             log.info("Start work method /all request");
             List<UserRoleDto> users = client.getUsers();
             log.info("All users={}", users);
+            log.info("Send correctly /all method response");
             return "Список всех пользователей \n" + users;
         } catch (FeignException e) {
-            log.error("Error work /all request");
+            log.error("Error work /all request: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке получить список всех пользователей";
         }
     }

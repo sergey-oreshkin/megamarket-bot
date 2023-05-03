@@ -32,10 +32,10 @@ public class RequestSellerHandler implements Handler {
         log.info("RequestRoleDto={}", requestRoleDto);
         try {
             client.saveRequestRole(requestRoleDto);
-            log.info("True /requestseller request");
+            log.info("Send correctly /requestseller method response");
             return "Запрос на роль продавца произведен";
         } catch (FeignException e) {
-            log.error("Error where send /requestadmin request");
+            log.error("Error where send /requestadmin request: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке сделать запрос на роль продавца";
         }
     }

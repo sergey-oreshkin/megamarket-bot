@@ -31,10 +31,10 @@ public class RequestAdminHandler implements Handler {
         log.info("RequestRoleDto={}", requestRoleDto);
         try {
             client.saveRequestRole(requestRoleDto);
-            log.info("True /requestadmin request");
+            log.info("Send correctly /requestadmin method response");
             return "Запрос на роль администратора произведен";
         } catch (FeignException e) {
-            log.error("Error where send /requestadmin request");
+            log.error("Error where send /requestadmin request: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке сделать запрос на роль администратора";
         }
     }

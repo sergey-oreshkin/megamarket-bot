@@ -26,11 +26,11 @@ public class StartHandler implements Handler {
             Long userId = update.getMessage().getFrom().getId();
             String userName = update.getMessage().getFrom().getFirstName();
             UserDto user = registerUser(userId, userName);
-            log.info("Welcome and add new user");
+            log.info("Send correctly /start method response");
             return "Привет " + user.getUsername() + ", добро пожаловать в Mega Market," +
                     " вы добавлены в список наших пользователей";
         } catch (FeignException e) {
-            log.warn("Error feign client and send inform message for user");
+            log.error("Error feign client and send inform message for user: {}", e.getMessage(), e);
             return "Привет, добро пожаловать в Mega Market," +
                     " произошла ошибка при добавлении вас в список наших пользователей";
         }

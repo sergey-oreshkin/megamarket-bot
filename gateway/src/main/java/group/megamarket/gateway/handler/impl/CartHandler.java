@@ -27,11 +27,11 @@ public class CartHandler implements Handler {
             String name = update.getMessage().getFrom().getFirstName();
             OrderResponseDto order = client.getOrder(userId);
             log.info("OrderResponseDto={}", order);
-            log.info("Send currency /cart response");
+            log.info("Send correctly /cart method response");
             return name + ", вот данные о вашей корзине\n"
                     + order;
         } catch (FeignException e) {
-            log.warn("Feign error /cart method");
+            log.error("Feign error /cart method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке получить данные о вашей корзине";
         }
     }

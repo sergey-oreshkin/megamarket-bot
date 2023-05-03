@@ -1,12 +1,14 @@
 package group.megamarket.gateway.handler.impl;
 
 import group.megamarket.gateway.handler.Handler;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
  * Класс для обработки /help запроса
  */
+@Slf4j
 @Component
 public class HelpHandler implements Handler {
 
@@ -29,6 +31,7 @@ public class HelpHandler implements Handler {
 
     @Override
     public String handle(Update update) {
+        log.info("Send correctly /help method response");
         return HELP_TEXT;
     }
 }

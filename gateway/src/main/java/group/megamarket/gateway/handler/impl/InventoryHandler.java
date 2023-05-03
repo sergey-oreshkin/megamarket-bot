@@ -29,10 +29,11 @@ public class InventoryHandler implements Handler {
             String sellerName = update.getMessage().getFrom().getFirstName();
             List<ProductDto> allByUserId = storageService.getAllByUserId(sellerId);
             log.info("List<ProductDto>={}", allByUserId);
+            log.info("Send correctly /inventory method response");
             return sellerName + ", вот ваш список товаров \n"
                     + allByUserId;
         } catch (ServerSOAPFaultException e) {
-            log.error("Soap server error /inventory method");
+            log.error("Soap server error /inventory method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке получить ваш список товаров";
         }
     }

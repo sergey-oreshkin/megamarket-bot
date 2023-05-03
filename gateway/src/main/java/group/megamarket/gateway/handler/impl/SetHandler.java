@@ -43,11 +43,11 @@ public class SetHandler implements Handler {
             log.info("Send correctly response /set method");
             return "Пользователю с id = " + arrParam[1] + " назначена роль " + arrParam[2];
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            log.error("Validation error /set method");
+            log.error("Validation error /set method: {}", e.getMessage(), e);
             return "Ошибка валидации, введите в верном формате\n" +
                     "Например,  /set 1234 ADMIN";
         } catch (FeignException e) {
-            log.error("Feign error /set method");
+            log.error("Feign error /set method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке назначить роль";
         }
     }

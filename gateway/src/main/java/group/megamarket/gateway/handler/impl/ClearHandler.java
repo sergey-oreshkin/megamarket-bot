@@ -28,7 +28,7 @@ public class ClearHandler implements Handler {
             log.info("Send correctly /clear method response");
             return userName + ", ваша корзина успешно очищена";
         } catch (FeignException e) {
-            log.error("Feign error /clear work");
+            log.error("Feign error /clear work: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке очистить корзину";
         }
     }

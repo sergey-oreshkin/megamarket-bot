@@ -33,11 +33,11 @@ public class RemoveHandler implements Handler {
             log.info("Send correctly /remove method response");
             return arrParams[1] + " в количестве " + arrParams[2] + "убран со склада";
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            log.error("Validation error /remove method");
+            log.error("Validation error /remove method: {}", e.getMessage(), e);
             return "Ошибка валидации, введите в верном формате\n" +
                     "Например,  /remove carrot 2";
         } catch (ServerSOAPFaultException e) {
-            log.error("Soap server error /remove method");
+            log.error("Soap server error /remove method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке убрать товар со склада";
         }
     }
