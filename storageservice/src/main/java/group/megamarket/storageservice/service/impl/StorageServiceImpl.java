@@ -12,6 +12,7 @@ import group.megamarket.storageservice.service.ProductService;
 import group.megamarket.storageservice.service.StorageService;
 import group.megamarket.storageservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.jws.WebService;
@@ -22,6 +23,7 @@ import java.util.Optional;
  * сервис для работы со складом.
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 @WebService(
         name = "StorageService",
@@ -43,7 +45,10 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public List<ProductDto> getAll() {
-        return productMapper.toDto(productRepository.findAll());
+        log.info("Try to get all products");
+        List<Product> products = productRepository.findAll();
+        log.info("All products:{}", products);
+        return productMapper.toDto(products);
     }
 
     /**
@@ -53,8 +58,11 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public List<ProductDto> getAllByUserId(Long userId) {
+        log.info("Try to get all by user id={}", userId);
         userService.checkUserHasRoleOrThrow(userId, Role.SELLER);
-        return productMapper.toDto(productRepository.findAllByUserId(userId));
+        List<Product> products = productRepository.findAllByUserId(userId);
+        log.info("All by userid="+ userId + " " + products);
+        return productMapper.toDto(products);
     }
 
     /**
@@ -65,6 +73,7 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public Long deleteAllByUserId(Long userId) {
+        log.info("Delete by user id={}", userId);
         return productRepository.deleteByUserId(userId);
     }
 
@@ -79,14 +88,15 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public ProductDto addNewProduct(Long userId, String productName, Integer count) {
+        log.info("Try to add new product. userId={}, productName={}, count={}", userId, productName, count);
         userService.checkUserHasRoleOrThrow(userId, Role.SELLER);
         Optional<Product> productOptional = productRepository.findByUserIdAndName(userId, productName);
         if (productOptional.isPresent()) {
             throw new ProductAlreadyExistException(String.format(PRODUCT_ALREADY_EXIST_MESSAGE_TEMPLATE, productName));
         }
-        Product product = new Product(null, productName, count, userId);
-
-        return productMapper.toDto(productRepository.save(product));
+        Product savedProduct = productRepository.save(new Product(null, productName, count, userId));
+        log.info("Added product: {}", savedProduct);
+        return productMapper.toDto(savedProduct);
     }
 
     /**
@@ -100,8 +110,11 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public ProductDto changeProductCountBySeller(Long userId, String productName, Integer difference) {
+        log.info("Try to change product count. userId={}, productName={}, difference={}", userId, productName, difference);
         userService.checkUserHasRoleOrThrow(userId, Role.SELLER);
-        return productMapper.toDto(productService.changeProductCount(userId, productName, difference));
+        Product changedProduct = productService.changeProductCount(userId, productName, difference);
+        log.info("Changed product: {}", changedProduct);
+        return productMapper.toDto(changedProduct);
     }
 
     /**
@@ -111,6 +124,7 @@ public class StorageServiceImpl implements StorageService {
      */
     @Override
     public void changeProductCountByBuyer(List<ProductDto> products) {
+        log.info("Try to change products count by buyer: {}", products);
         productService.changeProductsCount(products);
     }
 }
