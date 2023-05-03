@@ -25,6 +25,7 @@ public class AddHandler implements Handler {
             Long sellerId = update.getMessage().getFrom().getId();
             String message = update.getMessage().getText();
             String[] arrParams = message.split(" ");
+            log.info("Seller id={}, productName={}, productCount={}", sellerId, arrParams[1], arrParams[2]);
             storageService.addNewProduct(sellerId, arrParams[1], Integer.valueOf(arrParams[2]));
             log.info("Send correctly /add method response");
             return arrParams[1] + " в количестве " + arrParams[2] + "добавлен";

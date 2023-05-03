@@ -20,12 +20,12 @@ public interface MarketServiceClient {
     @PutMapping("/carts")
     OrderRequestDto addProduct(@RequestBody OrderRequestDto orderRequestDto);
 
-    @GetMapping("/users")
+    @GetMapping("/carts/users")
     OrderResponseDto getOrder(@PathVariable Long userId);
 
-    @PostMapping("/users")
+    @PostMapping("/carts/users")
     OrderResponseDto pay(@PathVariable Long userId);
 
-    @DeleteMapping("/users")
+    @DeleteMapping("/carts/users")
     void clear(@PathVariable Long userId);
 }

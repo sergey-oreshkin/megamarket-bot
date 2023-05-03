@@ -28,6 +28,7 @@ public class RequestAdminHandler implements Handler {
                 .id(userId)
                 .roleEnum(RoleEnum.ADMIN)
                 .build();
+        log.info("RequestRoleDto={}", requestRoleDto);
         try {
             client.saveRequestRole(requestRoleDto);
             log.info("True /requestadmin request");

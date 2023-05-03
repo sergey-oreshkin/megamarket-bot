@@ -32,6 +32,7 @@ public class BuyHandler implements Handler {
                     .productId(Long.valueOf(idString[1]))
                     .quantity(1)
                     .build();
+            log.info("OrderResponseDto={}", response);
             client.addProduct(response);
             log.info("Send correctly response /buy method");
             return "Ваш продукт успешно добавлен в корзину";

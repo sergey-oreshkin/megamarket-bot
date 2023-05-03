@@ -42,7 +42,7 @@ public class StartHandler implements Handler {
                 .id(id)
                 .username(name)
                 .build();
-
+        log.info("UserDto={}", userDto);
         return client.saveUser(userDto);
     }
 }

@@ -29,13 +29,14 @@ public class RequestSellerHandler implements Handler {
                 .id(userId)
                 .roleEnum(RoleEnum.SELLER)
                 .build();
+        log.info("RequestRoleDto={}", requestRoleDto);
         try {
             client.saveRequestRole(requestRoleDto);
             log.info("True /requestseller request");
             return "Запрос на роль продавца произведен";
         } catch (FeignException e) {
             log.error("Error where send /requestadmin request");
-            return "Произошла ошибка, при попытке сделать запрос на роль администратора";
+            return "Произошла ошибка, при попытке сделать запрос на роль продавца";
         }
     }
 }

@@ -1,6 +1,7 @@
 package group.megamarket.gateway.handler.impl;
 
 import feign.FeignException;
+import group.megamarket.gateway.dto.market.OrderResponseDto;
 import group.megamarket.gateway.feign.MarketServiceClient;
 import group.megamarket.gateway.handler.Handler;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,11 @@ public class PayHandler implements Handler {
             log.info("Start work /pay method");
             Long userId = update.getMessage().getFrom().getId();
             String userName = update.getMessage().getFrom().getFirstName();
+            OrderResponseDto pay = client.pay(userId);
+            log.info("OrderResponseDto={}", pay);
             log.info("Send correctly /pay method response");
             return userName + ", ваша корзина оплачена\n"
-                    + client.pay(userId);
+                    + pay;
         } catch (FeignException e) {
             log.error("Feign error /pay method");
             return "Произошла ошибка, при попытке оплатить коризну";

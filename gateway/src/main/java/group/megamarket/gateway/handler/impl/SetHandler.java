@@ -38,6 +38,7 @@ public class SetHandler implements Handler {
                     .isAdmin(isAdmin)
                     .isSeller(isSeller)
                     .build();
+            log.info("UserRequestRoleDto={}", requestRoleDto);
             client.updateUserRole(requestRoleDto);
             log.info("Send correctly response /set method");
             return "Пользователю с id = " + arrParam[1] + " назначена роль " + arrParam[2];
