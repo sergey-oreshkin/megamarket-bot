@@ -1,7 +1,7 @@
 package group.megamarket.marketservice.service;
 
-import group.megamarket.marketservice.entity.Order;
-import group.megamarket.marketservice.entity.OrderProduct;
+import group.megamarket.marketservice.dto.OrderRequestDto;
+import group.megamarket.marketservice.dto.OrderResponseDto;
 
 /**
  * Интерфейс сервиса для управления корзиной пользователя
@@ -12,11 +12,11 @@ public interface OrderService {
     /**
      * Метод добавляет продукт в корзину покупателя
      *
-     * @param orderProduct добавляемый продукт
-     * @param userId       id покупателя
+     * @param orderRequestDto добавляемый продукт
+     * @param userId          id покупателя
      * @return Order корзина пользователя
      */
-    Order addProduct(OrderProduct orderProduct, Long userId);
+    OrderResponseDto addProduct(OrderRequestDto orderRequestDto, Long userId);
 
     /**
      * Метод получает корзину покупателя
@@ -24,7 +24,7 @@ public interface OrderService {
      * @param userId id покупателя
      * @return Order корзина пользователя
      */
-    Order getOrder(Long userId);
+    OrderResponseDto getOrder(Long userId);
 
     /**
      * Метод подтверждения оплаты корзины
@@ -32,7 +32,7 @@ public interface OrderService {
      * @param userId id покупателя
      * @return Order оплаченная корзина
      */
-    Order pay(Long userId);
+    OrderResponseDto pay(Long userId);
 
     /**
      * Метод удаления продукта из корзины

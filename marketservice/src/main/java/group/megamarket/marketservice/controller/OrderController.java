@@ -3,7 +3,6 @@ package group.megamarket.marketservice.controller;
 
 import group.megamarket.marketservice.dto.OrderRequestDto;
 import group.megamarket.marketservice.dto.OrderResponseDto;
-import group.megamarket.marketservice.mapper.OrderMapper;
 import group.megamarket.marketservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/carts")
 public class OrderController {
     private final OrderService service;
-    private final OrderMapper orderMapper;
 
     /**
      * Метод обрабатывает PUT-запрос на добавление продукта в корзину
@@ -30,11 +28,7 @@ public class OrderController {
      */
     @PutMapping
     public OrderResponseDto addProduct(@RequestBody OrderRequestDto orderRequestDto) {
-        var orderProduct = orderMapper.toOrderProduct(orderRequestDto);
-
-        var order = service.addProduct(orderProduct, orderRequestDto.getUserId());
-
-        return orderMapper.toOrderResponse(order);
+        return service.addProduct(orderRequestDto, orderRequestDto.getUserId());
     }
 
     /**
@@ -45,9 +39,7 @@ public class OrderController {
      */
     @GetMapping("/users/{userId}")
     public OrderResponseDto getOrder(@PathVariable Long userId) {
-        var order = service.getOrder(userId);
-
-        return orderMapper.toOrderResponse(order);
+        return service.getOrder(userId);
     }
 
     /**
@@ -58,9 +50,7 @@ public class OrderController {
      */
     @PostMapping("/users/{userId}")
     public OrderResponseDto pay(@PathVariable Long userId) {
-        var order = service.pay(userId);
-
-        return orderMapper.toOrderResponse(order);
+        return service.pay(userId);
     }
 
     /**
