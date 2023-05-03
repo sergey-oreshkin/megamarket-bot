@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Сервис для работы с юзерами. Поиск, сохранение  и т.п.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -33,19 +36,27 @@ public class UserServiceImpl implements UserService {
 
     private final StorageService storageService;
 
+    /**
+     * Метод возвращает список всех юзеров, у которых роли "ADMIN", "SELLER"
+     */
     @Override
     public List<User> findAllAdminAndSeller() {
         List<User> allAdminAndSeller = userRepository.findAllAdminAndSeller(List.of(RoleEnum.ADMIN, RoleEnum.SELLER));
-        log.info("received list users: " + allAdminAndSeller);
+        log.info("received list users: {}", allAdminAndSeller);
         return allAdminAndSeller;
     }
 
+    /**
+     * Метод возвращает список всех юзеров, у которых роли "ADMIN", "SELLER"
+     *
+     * @param userDto - конкретный юзер
+     * @return сохраненного userDto
+     */
     @Override
     public UserDto save(UserDto userDto) {
         if (userDto == null) throw new RuntimeException();
 
         Optional<User> userOptional = userRepository.findById(userDto.getId());
-        log.info("user from db: " + userOptional.get());
 
         if (userOptional.isPresent()) {
             return userMapper.toUserDto(userOptional.get());
@@ -62,25 +73,35 @@ public class UserServiceImpl implements UserService {
         }
 
         User savedUser = userRepository.save(user);
-        log.info("saved user: " + savedUser);
+        log.info("saved user: {}", savedUser);
         return userMapper.toUserDto(user);
     }
 
+    /**
+     * @param id - id юзера
+     * @return список всех ролей конкретного юзера
+     * @throws UserNotFoundException - если юзер не найден
+     */
     @Override
     public Set<Role> findRoleUserByUserId(Long id) {
-        log.info("incoming user id: " + id);
+        log.info("incoming user id: {}", id);
         Set<Role> roles = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("There is no such user")).getRoles();
-        log.info("received roles: " + roles);
+        log.info("received roles: {}", roles);
         return roles;
     }
 
+    /**
+     * @param userRequestRoleDto - роли, которые юзер запрашивает
+     * @return userDto конкретного юзера
+     * @throws UserNotFoundException - если юзер не найден
+     */
     @Override
     public UserDto updateUserRole(UserRequestRoleDto userRequestRoleDto) {
-        log.info("incoming userRequestRoleDto: " + userRequestRoleDto);
+        log.info("incoming userRequestRoleDto: {}", userRequestRoleDto);
         User user = userRepository.findById(userRequestRoleDto.getUserId()).orElseThrow(() -> new UserNotFoundException("There is no such user"));
-        log.info("user from userRequestRoleDto: " + user);
+        log.info("user from userRequestRoleDto: {}", user);
         Set<Role> userRole = user.getRoles();
-        log.info("roles from user: " + userRole);
+        log.info("roles from user: {}", userRole);
 
         if (userRequestRoleDto.getIsAdmin() != null) {
             Role roleAdmin = roleRepository.findByRoleEnum(RoleEnum.ADMIN);
@@ -102,7 +123,7 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(userRole);
         UserDto updatedUserDto = userMapper.toUserDto(userRepository.save(user));
-        log.info("updated userDto: " + updatedUserDto);
+        log.info("updated userDto: {}", updatedUserDto);
         return updatedUserDto;
     }
 }

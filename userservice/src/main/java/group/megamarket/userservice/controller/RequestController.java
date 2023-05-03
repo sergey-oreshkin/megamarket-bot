@@ -25,15 +25,15 @@ public class RequestController {
     @GetMapping
     public List<RequestDto> getAllRequests() {
         List<RequestDto> requestDtos = requestMapper.toListDto(requestService.findAll());
-        log.info("received list requestDto: " + requestDtos);
+        log.info("received list requestDto: {}", requestDtos);
         return requestDtos;
     }
 
     @PostMapping
     public RequestRoleDto saveRequestRole(@RequestBody RequestRoleDto requestRole) {
-        log.info("incoming requestRole: " + requestRole);
+        log.info("incoming requestRole: {}", requestRole);
         RequestRoleDto roleDto = requestService.saveRequestRole(requestRole);
-        log.info("saved requestRoleDto: " + roleDto);
+        log.info("saved requestRoleDto: {}", roleDto);
         return roleDto;
     }
 }

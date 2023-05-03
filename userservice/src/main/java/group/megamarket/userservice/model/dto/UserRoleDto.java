@@ -6,18 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+/**
+ * ДТО роли юзера
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRoleDto {
-
     private Long id;
     private Set<RoleDto> roles;
-
-    @Override
-    public String toString() {
-        return "UserRoleDto: " +
-                "id = " + id +
-                ", roles = " + roles;
-    }
 }

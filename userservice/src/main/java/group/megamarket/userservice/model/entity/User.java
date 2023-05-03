@@ -8,6 +8,9 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Отображение таблицы users в БД
+ */
 @Entity
 @Getter
 @Setter

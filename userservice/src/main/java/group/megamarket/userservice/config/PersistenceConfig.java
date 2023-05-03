@@ -16,6 +16,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Настройка бинов подключения к БД и JPA
+ */
 @Configuration
 @RequiredArgsConstructor
 @EnableTransactionManagement
@@ -25,6 +28,9 @@ public class PersistenceConfig {
 
     private final Environment environment;
 
+    /**
+     * @return DataSource
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -34,6 +40,7 @@ public class PersistenceConfig {
         dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
         return dataSource;
     }
+
 
     @Bean
     public Properties hibernateProperties() {
@@ -47,6 +54,10 @@ public class PersistenceConfig {
         return properties;
     }
 
+    /**
+     * @param dataSource - сконфигурированный DataSource
+     * @return LocalContainerEntityManagerFactoryBean
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         final LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
@@ -60,6 +71,10 @@ public class PersistenceConfig {
         return emf;
     }
 
+    /**
+     * @param entityManagerFactory - бин EntityManagerFactory
+     * @return JpaTransactionManager
+     */
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
