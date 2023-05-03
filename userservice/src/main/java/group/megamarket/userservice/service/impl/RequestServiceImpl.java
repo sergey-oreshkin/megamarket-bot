@@ -11,11 +11,13 @@ import group.megamarket.userservice.repository.RoleRepository;
 import group.megamarket.userservice.repository.UserRepository;
 import group.megamarket.userservice.service.RequestService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.List;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class RequestServiceImpl implements RequestService {
@@ -27,23 +29,30 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<Request> findAll() {
-        return repository.findAll();
+        List<Request> requests = repository.findAll();
+        log.info("received list requests: " + requests);
+        return requests;
     }
 
     @Override
     public RequestRoleDto saveRequestRole(RequestRoleDto requestRole) {
         User user = userRepository.findById(requestRole.getUserId()).orElseThrow(() -> new UserNotFoundException("There is no such user"));
+        log.info("user from role: " + user);
         Role role = roleRepository.findByRoleEnum(requestRole.getRoleDto().getRoleEnum());
+        log.info("roles from requestRole: " + role);
 
         if (user.getRoles() == null) user.setRoles(new HashSet<>());
 
         if (user.getRoles().contains(role)) {
+            log.info("saved role: " + requestRole);
             return requestRole;
         } else {
             Request request = requestMapper.toRequest(requestRole);
             request.setUser(user);
             request.setRole(role);
-            return requestMapper.toRequestRoleDto(repository.save(request));
+            RequestRoleDto savedRequestRoleDto = requestMapper.toRequestRoleDto(repository.save(request));
+            log.info("saved roleDro: " + savedRequestRoleDto);
+            return savedRequestRoleDto;
         }
     }
 }

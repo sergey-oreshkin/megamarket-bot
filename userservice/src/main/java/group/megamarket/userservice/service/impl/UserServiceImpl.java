@@ -12,6 +12,7 @@ import group.megamarket.userservice.repository.UserRepository;
 import group.megamarket.userservice.service.UserService;
 import group.megamarket.userservice.soap.StorageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -33,7 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllAdminAndSeller() {
-        return userRepository.findAllAdminAndSeller(List.of(RoleEnum.ADMIN, RoleEnum.SELLER));
+        List<User> allAdminAndSeller = userRepository.findAllAdminAndSeller(List.of(RoleEnum.ADMIN, RoleEnum.SELLER));
+        log.info("received list users: " + allAdminAndSeller);
+        return allAdminAndSeller;
     }
 
     @Override
@@ -41,6 +45,8 @@ public class UserServiceImpl implements UserService {
         if (userDto == null) throw new RuntimeException();
 
         Optional<User> userOptional = userRepository.findById(userDto.getId());
+        log.info("user from db: " + userOptional.get());
+
         if (userOptional.isPresent()) {
             return userMapper.toUserDto(userOptional.get());
         }
@@ -55,19 +61,26 @@ public class UserServiceImpl implements UserService {
             user.setRoles(roles);
         }
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        log.info("saved user: " + savedUser);
         return userMapper.toUserDto(user);
     }
 
     @Override
     public Set<Role> findRoleUserByUserId(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("There is no such user")).getRoles();
+        log.info("incoming user id: " + id);
+        Set<Role> roles = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("There is no such user")).getRoles();
+        log.info("received roles: " + roles);
+        return roles;
     }
 
     @Override
     public UserDto updateUserRole(UserRequestRoleDto userRequestRoleDto) {
+        log.info("incoming userRequestRoleDto: " + userRequestRoleDto);
         User user = userRepository.findById(userRequestRoleDto.getUserId()).orElseThrow(() -> new UserNotFoundException("There is no such user"));
+        log.info("user from userRequestRoleDto: " + user);
         Set<Role> userRole = user.getRoles();
+        log.info("roles from user: " + userRole);
 
         if (userRequestRoleDto.getIsAdmin() != null) {
             Role roleAdmin = roleRepository.findByRoleEnum(RoleEnum.ADMIN);
@@ -88,7 +101,8 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setRoles(userRole);
-
-        return userMapper.toUserDto(userRepository.save(user));
+        UserDto updatedUserDto = userMapper.toUserDto(userRepository.save(user));
+        log.info("updated userDto: " + updatedUserDto);
+        return updatedUserDto;
     }
 }
