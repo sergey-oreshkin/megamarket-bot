@@ -57,6 +57,8 @@ public class PersistenceConfig {
                 environment.getProperty("javax.persistence.schema-generation.database.action", "none"));
         properties.put("javax.persistence.schema-generation.create-script-source",
                 environment.getProperty("javax.persistence.schema-generation.create-script-source"));
+        properties.put("javax.persistence.sql-load-script-source",
+                environment.getProperty("javax.persistence.sql-load-script-source"));
         return properties;
     }
 
@@ -91,10 +93,10 @@ public class PersistenceConfig {
     /**
      * @return StorageService
      */
-    @Bean
-    public StorageService storageService() throws MalformedURLException {
-        QName serviceQName = new QName("http://localhost:8000/soap", "StorageServiceImplService");
-        Service service = StorageServiceImplService.create(new URL(environment.getProperty("storage.url")), serviceQName);
-        return service.getPort(StorageService.class);
-    }
+//    @Bean
+//    public StorageService storageService() throws MalformedURLException {
+//        QName serviceQName = new QName("http://localhost:8000/soap", "StorageServiceImplService");
+//        Service service = StorageServiceImplService.create(new URL(environment.getProperty("storage.url")), serviceQName);
+//        return service.getPort(StorageService.class);
+//    }
 }

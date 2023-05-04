@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
-    private final StorageService storageService;
+//    private final StorageService storageService;
 
     /**
      * Метод возвращает список всех юзеров, у которых роли "ADMIN", "SELLER"
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
             if (userRequestRoleDto.getIsSeller()) {
                 userRole.add(roleSeller);
             } else {
-                storageService.deleteAllByUserId(user.getId());
+//                storageService.deleteAllByUserId(user.getId());
                 userRole.remove(roleSeller);
             }
         }
