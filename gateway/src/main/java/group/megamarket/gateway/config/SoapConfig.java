@@ -17,7 +17,8 @@ import java.net.URL;
 @Configuration
 public class SoapConfig {
 
-    @Value("${storage-service.url}") String url;
+    @Value("${storage-service.url}")
+    String url;
 
     @Bean
     public StorageService storageService() throws MalformedURLException {

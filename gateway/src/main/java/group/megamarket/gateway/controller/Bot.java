@@ -1,5 +1,6 @@
 package group.megamarket.gateway.controller;
 
+import group.megamarket.gateway.config.BotConfig;
 import group.megamarket.gateway.handler.Handler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import group.megamarket.gateway.config.BotConfig;
 
 import java.util.Map;
 

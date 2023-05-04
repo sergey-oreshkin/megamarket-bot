@@ -32,7 +32,6 @@ public class RequestServiceImpl implements RequestService {
 
     /**
      * Метод возвращает список всех запросов
-     *
      */
     @Override
     public List<Request> findAll() {

@@ -1,10 +1,6 @@
 package group.megamarket.gateway.feign;
 
-import group.megamarket.gateway.dto.user.RequestDto;
-import group.megamarket.gateway.dto.user.RequestRoleDto;
-import group.megamarket.gateway.dto.user.UserDto;
-import group.megamarket.gateway.dto.user.UserRequestRoleDto;
-import group.megamarket.gateway.dto.user.UserRoleDto;
+import group.megamarket.gateway.dto.user.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

@@ -1,4 +1,3 @@
-
 package group.megamarket.gateway.soap;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for addNewProductResponse complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="addNewProductResponse"&gt;
  *   &lt;complexContent&gt;
@@ -23,12 +22,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "addNewProductResponse", propOrder = {
-    "_return"
+        "_return"
 })
 public class AddNewProductResponse {
 
@@ -37,11 +34,9 @@ public class AddNewProductResponse {
 
     /**
      * Gets the value of the return property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ProductDto }
-     *     
+     *
+     * @return possible object is
+     * {@link ProductDto }
      */
     public ProductDto getReturn() {
         return _return;
@@ -49,11 +44,9 @@ public class AddNewProductResponse {
 
     /**
      * Sets the value of the return property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ProductDto }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link ProductDto }
      */
     public void setReturn(ProductDto value) {
         this._return = value;

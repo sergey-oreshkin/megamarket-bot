@@ -2,6 +2,7 @@ package group.megamarket.gateway.handler.impl;
 
 import feign.FeignException;
 import group.megamarket.gateway.dto.user.RequestRoleDto;
+import group.megamarket.gateway.dto.user.RoleDto;
 import group.megamarket.gateway.dto.user.RoleEnum;
 import group.megamarket.gateway.feign.UserServiceClient;
 import group.megamarket.gateway.handler.Handler;
@@ -26,8 +27,8 @@ public class RequestSellerHandler implements Handler {
         Long userId = update.getMessage().getFrom().getId();
         RequestRoleDto requestRoleDto = RequestRoleDto
                 .builder()
-                .id(userId)
-                .roleEnum(RoleEnum.SELLER)
+                .userId(userId)
+                .roleDto(RoleDto.builder().roleEnum(RoleEnum.SELLER).build())
                 .build();
         log.info("RequestRoleDto={}", requestRoleDto);
         try {

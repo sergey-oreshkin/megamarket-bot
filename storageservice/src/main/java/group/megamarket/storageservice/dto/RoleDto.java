@@ -15,5 +15,5 @@ import lombok.ToString;
 @AllArgsConstructor
 public class RoleDto {
     private Long id;
-    private Role role;
+    private Role roleEnum;
 }
