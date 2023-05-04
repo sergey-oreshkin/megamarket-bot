@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Отображение таблицы roles в БД
+ */
 @Entity
 @Getter
 @Setter

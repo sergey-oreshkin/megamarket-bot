@@ -1,5 +1,7 @@
 package group.megamarket.userservice.config;
 
+import group.megamarket.userservice.soap.StorageService;
+import group.megamarket.userservice.soap.StorageServiceImplService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +16,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
+/**
+ * Настройка бинов подключения к БД и JPA
+ */
 @Configuration
 @RequiredArgsConstructor
 @EnableTransactionManagement
@@ -25,6 +34,9 @@ public class PersistenceConfig {
 
     private final Environment environment;
 
+    /**
+     * @return DataSource
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -34,6 +46,7 @@ public class PersistenceConfig {
         dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
         return dataSource;
     }
+
 
     @Bean
     public Properties hibernateProperties() {
@@ -47,6 +60,10 @@ public class PersistenceConfig {
         return properties;
     }
 
+    /**
+     * @param dataSource - сконфигурированный DataSource
+     * @return LocalContainerEntityManagerFactoryBean
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         final LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
@@ -60,10 +77,24 @@ public class PersistenceConfig {
         return emf;
     }
 
+    /**
+     * @param entityManagerFactory - бин EntityManagerFactory
+     * @return JpaTransactionManager
+     */
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
+    }
+
+    /**
+     * @return StorageService
+     */
+    @Bean
+    public StorageService storageService() throws MalformedURLException {
+        QName serviceQName = new QName("http://localhost:8000/soap", "StorageServiceImplService");
+        Service service = StorageServiceImplService.create(new URL(environment.getProperty("storage.url")), serviceQName);
+        return service.getPort(StorageService.class);
     }
 }

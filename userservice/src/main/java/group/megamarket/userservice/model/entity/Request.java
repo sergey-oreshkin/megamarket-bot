@@ -8,6 +8,9 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Отображение таблицы requests в БД
+ */
 @Entity
 @Getter
 @Setter

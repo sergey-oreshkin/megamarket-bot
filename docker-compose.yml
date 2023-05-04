@@ -45,9 +45,10 @@ services:
   user-service:
     build: ./userservice
     environment:
-      - DBURL=jdbc:mysql://user-db:3306/mega-market
+      - DB_URL=jdbc:mysql://user-db:3306/mega-market
       - DB_USERNAME=root
       - DB_PASSWORD=root
+      - STORAGE_URL=http://storage:8000/soap?wsdl
     depends_on:
       user-db:
         condition: service_healthy
