@@ -1,0 +1,15 @@
+version: '3.0'
+services:
+  java-app:
+    build: .
+    depends_on:
+      - bd
+    ports:
+      - "8088:8082"
+    environment:
+      - DBURL=jdbc:mysql://bd:3306/mega-market
+  bd:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=d6KTf*gFLnY^
+      - MYSQL_DATABASE=mega-market

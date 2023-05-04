@@ -1,0 +1,94 @@
+version: '3.8'
+services:
+  gateway:
+    build: ./gateway
+    env_file:
+      - .env
+    depends_on:
+      storage:
+        condition: service_healthy
+    environment:
+      - USER_SERVICE_URL=http://user-service:8082/
+      - MARKET_SERVICE_URL=http://market-service:8085/
+      - STORAGE_SERVICE_URL=http://storage:8000/soap?wsdl
+
+  storage:
+    build: ./storageservice
+    environment:
+      - JDBC_URL=jdbc:postgresql://storage-db:5432/storage
+      - JDBC_USERNAME=root
+      - JDBC_PASSWORD=root
+      - HIBERNATE_SHOW_SQL=false
+      - USER_SERVICE_URL=http://user-service:8082/
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/soap?wsdl" ]
+      interval: 3s
+      timeout: 30s
+      retries: 10
+      start_period: 5s
+    depends_on:
+      storage-db:
+        condition: service_healthy
+
+  storage-db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_DB=storage
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "root", "-d", "storage" ]
+      interval: 3s
+      timeout: 30s
+      retries: 10
+      start_period: 5s
+
+  user-service:
+    build: ./userservice
+    environment:
+      - DB_URL=jdbc:mysql://user-db:3306/mega-market
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - STORAGE_URL=http://storage:8000/soap?wsdl
+    depends_on:
+      user-db:
+        condition: service_healthy
+      storage:
+        condition: service_healthy
+
+  user-db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mega-market
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 3s
+      timeout: 30s
+      retries: 10
+      start_period: 5s
+
+  market-service:
+    build: ./marketservice
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://market-db:5432/market
+      - DATASOURCE_USERNAME=postgres
+      - DATASOURCE_PASSWORD=443966
+    depends_on:
+      market-db:
+        condition: service_healthy
+      storage:
+        condition: service_healthy
+
+  market-db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_DB=market
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=443966
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres", "-d", "market" ]
+      interval: 3s
+      timeout: 30s
+      retries: 10
+      start_period: 5s
