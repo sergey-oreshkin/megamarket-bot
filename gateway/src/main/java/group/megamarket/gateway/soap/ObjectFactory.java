@@ -1,4 +1,3 @@
-
 package group.megamarket.gateway.soap;
 
 import javax.xml.bind.JAXBElement;
@@ -8,18 +7,17 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each 
- * Java content interface and Java element interface 
- * generated in the group.megamarket.gateway.soap package. 
- * <p>An ObjectFactory allows you to programatically 
- * construct new instances of the Java representation 
- * for XML content. The Java representation of XML 
- * content can consist of schema derived interfaces 
- * and classes representing the binding of schema 
- * type definitions, element declarations and model 
- * groups.  Factory methods for each of these are 
+ * This object contains factory methods for each
+ * Java content interface and Java element interface
+ * generated in the group.megamarket.gateway.soap package.
+ * <p>An ObjectFactory allows you to programatically
+ * construct new instances of the Java representation
+ * for XML content. The Java representation of XML
+ * content can consist of schema derived interfaces
+ * and classes representing the binding of schema
+ * type definitions, element declarations and model
+ * groups.  Factory methods for each of these are
  * provided in this class.
- * 
  */
 @XmlRegistry
 public class ObjectFactory {
@@ -39,14 +37,12 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: group.megamarket.gateway.soap
-     * 
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link AddNewProduct }
-     * 
      */
     public AddNewProduct createAddNewProduct() {
         return new AddNewProduct();
@@ -54,7 +50,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link AddNewProductResponse }
-     * 
      */
     public AddNewProductResponse createAddNewProductResponse() {
         return new AddNewProductResponse();
@@ -62,7 +57,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ChangeProductCountByBuyer }
-     * 
      */
     public ChangeProductCountByBuyer createChangeProductCountByBuyer() {
         return new ChangeProductCountByBuyer();
@@ -70,7 +64,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ChangeProductCountByBuyerResponse }
-     * 
      */
     public ChangeProductCountByBuyerResponse createChangeProductCountByBuyerResponse() {
         return new ChangeProductCountByBuyerResponse();
@@ -78,7 +71,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ChangeProductCountBySeller }
-     * 
      */
     public ChangeProductCountBySeller createChangeProductCountBySeller() {
         return new ChangeProductCountBySeller();
@@ -86,7 +78,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ChangeProductCountBySellerResponse }
-     * 
      */
     public ChangeProductCountBySellerResponse createChangeProductCountBySellerResponse() {
         return new ChangeProductCountBySellerResponse();
@@ -94,7 +85,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DeleteAllByUserId }
-     * 
      */
     public DeleteAllByUserId createDeleteAllByUserId() {
         return new DeleteAllByUserId();
@@ -102,7 +92,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link DeleteAllByUserIdResponse }
-     * 
      */
     public DeleteAllByUserIdResponse createDeleteAllByUserIdResponse() {
         return new DeleteAllByUserIdResponse();
@@ -110,7 +99,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link GetAll }
-     * 
      */
     public GetAll createGetAll() {
         return new GetAll();
@@ -118,7 +106,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link GetAllByUserId }
-     * 
      */
     public GetAllByUserId createGetAllByUserId() {
         return new GetAllByUserId();
@@ -126,7 +113,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link GetAllByUserIdResponse }
-     * 
      */
     public GetAllByUserIdResponse createGetAllByUserIdResponse() {
         return new GetAllByUserIdResponse();
@@ -134,7 +120,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link GetAllResponse }
-     * 
      */
     public GetAllResponse createGetAllResponse() {
         return new GetAllResponse();
@@ -142,7 +127,6 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link ProductDto }
-     * 
      */
     public ProductDto createProductDto() {
         return new ProductDto();
@@ -150,11 +134,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AddNewProduct }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link AddNewProduct }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link AddNewProduct }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "addNewProduct")
     public JAXBElement<AddNewProduct> createAddNewProduct(AddNewProduct value) {
@@ -163,11 +145,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AddNewProductResponse }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link AddNewProductResponse }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link AddNewProductResponse }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "addNewProductResponse")
     public JAXBElement<AddNewProductResponse> createAddNewProductResponse(AddNewProductResponse value) {
@@ -176,11 +156,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ChangeProductCountByBuyer }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link ChangeProductCountByBuyer }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link ChangeProductCountByBuyer }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "changeProductCountByBuyer")
     public JAXBElement<ChangeProductCountByBuyer> createChangeProductCountByBuyer(ChangeProductCountByBuyer value) {
@@ -189,11 +167,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ChangeProductCountByBuyerResponse }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link ChangeProductCountByBuyerResponse }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link ChangeProductCountByBuyerResponse }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "changeProductCountByBuyerResponse")
     public JAXBElement<ChangeProductCountByBuyerResponse> createChangeProductCountByBuyerResponse(ChangeProductCountByBuyerResponse value) {
@@ -202,11 +178,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ChangeProductCountBySeller }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link ChangeProductCountBySeller }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link ChangeProductCountBySeller }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "changeProductCountBySeller")
     public JAXBElement<ChangeProductCountBySeller> createChangeProductCountBySeller(ChangeProductCountBySeller value) {
@@ -215,11 +189,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ChangeProductCountBySellerResponse }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link ChangeProductCountBySellerResponse }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link ChangeProductCountBySellerResponse }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "changeProductCountBySellerResponse")
     public JAXBElement<ChangeProductCountBySellerResponse> createChangeProductCountBySellerResponse(ChangeProductCountBySellerResponse value) {
@@ -228,11 +200,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DeleteAllByUserId }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link DeleteAllByUserId }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link DeleteAllByUserId }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "deleteAllByUserId")
     public JAXBElement<DeleteAllByUserId> createDeleteAllByUserId(DeleteAllByUserId value) {
@@ -241,11 +211,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DeleteAllByUserIdResponse }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link DeleteAllByUserIdResponse }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link DeleteAllByUserIdResponse }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "deleteAllByUserIdResponse")
     public JAXBElement<DeleteAllByUserIdResponse> createDeleteAllByUserIdResponse(DeleteAllByUserIdResponse value) {
@@ -254,11 +222,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetAll }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link GetAll }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link GetAll }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "getAll")
     public JAXBElement<GetAll> createGetAll(GetAll value) {
@@ -267,11 +233,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetAllByUserId }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link GetAllByUserId }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link GetAllByUserId }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "getAllByUserId")
     public JAXBElement<GetAllByUserId> createGetAllByUserId(GetAllByUserId value) {
@@ -280,11 +244,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetAllByUserIdResponse }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link GetAllByUserIdResponse }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link GetAllByUserIdResponse }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "getAllByUserIdResponse")
     public JAXBElement<GetAllByUserIdResponse> createGetAllByUserIdResponse(GetAllByUserIdResponse value) {
@@ -293,11 +255,9 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetAllResponse }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link GetAllResponse }{@code >}
+     *
+     * @param value Java instance representing xml element's value.
+     * @return the new instance of {@link JAXBElement }{@code <}{@link GetAllResponse }{@code >}
      */
     @XmlElementDecl(namespace = "http://localhost:8000/soap", name = "getAllResponse")
     public JAXBElement<GetAllResponse> createGetAllResponse(GetAllResponse value) {

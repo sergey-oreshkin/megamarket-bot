@@ -15,17 +15,17 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException exception) {
         return new ResponseEntity<>(ErrorResponse.builder()
-                                                 .errorMessage(exception.getMessage())
-                                                 .errorCode(HttpStatus.BAD_REQUEST.toString())
-                                                 .build(), HttpStatus.BAD_REQUEST);
+                .errorMessage(exception.getMessage())
+                .errorCode(HttpStatus.BAD_REQUEST.toString())
+                .build(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException exception) {
         return new ResponseEntity<>(ErrorResponse.builder()
-                                                 .errorMessage(exception.getMessage())
-                                                 .errorCode(HttpStatus.NOT_FOUND.toString())
-                                                 .build(), HttpStatus.NOT_FOUND);
+                .errorMessage(exception.getMessage())
+                .errorCode(HttpStatus.NOT_FOUND.toString())
+                .build(), HttpStatus.NOT_FOUND);
     }
 }

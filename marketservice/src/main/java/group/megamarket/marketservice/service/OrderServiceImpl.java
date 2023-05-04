@@ -120,21 +120,21 @@ public class OrderServiceImpl implements OrderService {
 
     private Order getOrCreateOrder(Long userId) {
         return orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
-                              .orElse(Order.builder()
-                                           .orderProducts(new HashSet<>())
-                                           .userId(userId)
-                                           .orderDate(LocalDate.now())
-                                           .status(Status.AWAITING_PAYMENT)
-                                           .build());
+                .orElse(Order.builder()
+                        .orderProducts(new HashSet<>())
+                        .userId(userId)
+                        .orderDate(LocalDate.now())
+                        .status(Status.AWAITING_PAYMENT)
+                        .build());
     }
 
     private Order getOrderOrElseThrow(Long userId) {
         return orderRepository.findByUserIdAndStatus(userId, Status.AWAITING_PAYMENT)
-                              .orElseThrow(() -> {
-                                  log.error("user_id={userId} order was not found");
-                                  throw new NotFoundException(
-                                          String.format("Заказ пользователя с id=%s не найден", userId)
-                                  );
-                              });
+                .orElseThrow(() -> {
+                    log.error("user_id={userId} order was not found");
+                    throw new NotFoundException(
+                            String.format("Заказ пользователя с id=%s не найден", userId)
+                    );
+                });
     }
 }

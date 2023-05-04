@@ -30,7 +30,7 @@ public class BuyHandler implements Handler {
                     .builder()
                     .userId(userId)
                     .productId(Long.valueOf(idString[1]))
-                    .quantity(1)
+                    .quantity(Integer.parseInt(idString[2]))
                     .build();
             log.info("OrderResponseDto={}", response);
             client.addProduct(response);

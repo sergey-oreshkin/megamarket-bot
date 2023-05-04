@@ -29,7 +29,7 @@ public class SetHandler implements Handler {
             boolean isSeller = false;
             if (arrParam[2].equals("ADMIN")) {
                 isAdmin = true;
-            } else if (arrParam[2].equals("SELLER")){
+            } else if (arrParam[2].equals("SELLER")) {
                 isSeller = true;
             }
             UserRequestRoleDto requestRoleDto = UserRequestRoleDto

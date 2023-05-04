@@ -33,9 +33,9 @@ public class AppConfig {
         var modelMapper = new ModelMapper();
 
         modelMapper.getConfiguration()
-                   .setMatchingStrategy(MatchingStrategies.STRICT)
-                   .setSkipNullEnabled(true)
-                   .setFieldMatchingEnabled(true);
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setSkipNullEnabled(true)
+                .setFieldMatchingEnabled(true);
 
         var orderProductMapToProductDto = modelMapper.typeMap(OrderProduct.class, ProductDto.class);
         orderProductMapToProductDto.addMappings(mapping -> {

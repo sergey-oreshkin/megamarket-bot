@@ -61,7 +61,7 @@ public class StorageServiceImpl implements StorageService {
         log.info("Try to get all by user id={}", userId);
         userService.checkUserHasRoleOrThrow(userId, Role.SELLER);
         List<Product> products = productRepository.findAllByUserId(userId);
-        log.info("All by userid="+ userId + " " + products);
+        log.info("All by userid=" + userId + " " + products);
         return productMapper.toDto(products);
     }
 

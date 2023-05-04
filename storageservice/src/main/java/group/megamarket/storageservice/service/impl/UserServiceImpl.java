@@ -41,12 +41,13 @@ public class UserServiceImpl implements UserService {
         log.info("Check userId={} has role={}", userId, role);
         try {
             RoleDto[] roles = restTemplate.getForObject(String.format(GET_ROLES_URI_TEMPLATE, userId), RoleDto[].class);
-            if (Arrays.stream(roles).map(RoleDto::getRole).noneMatch(r -> r.equals(role))) {
+            log.info("Roles: {}", Arrays.toString(roles));
+            if (Arrays.stream(roles).map(RoleDto::getRoleEnum).noneMatch(r -> r.equals(role))) {
                 log.warn("Check userId={} has role={} failed!", userId, role);
                 throw new RuntimeException();
             }
         } catch (Exception e) {
-            log.error(e.getStackTrace().toString());
+            e.printStackTrace();
             throw new UserNotFoundException(String.format(USER_NOT_FOUND_MESSAGE_TEMPLATE, userId));
         }
     }
