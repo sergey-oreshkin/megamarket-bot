@@ -14,7 +14,7 @@ public class HelpHandler implements Handler {
 
     private static String HELP_TEXT = "Команды общие\n" +
             "/list - список всех товаров\n" +
-            "/buy (id) - добавить товар с данным идентификатором в корзину\n" +
+            "/buy (id count) - добавить товар с данным идентификатором в корзину\n" +
             "/cart - посмотреть свою корзину\n" +
             "/pay - оплатить корзину\n" +
             "/clear - очистить корзину\n" +
@@ -27,7 +27,7 @@ public class HelpHandler implements Handler {
             "/all - список всех пользователей с правами админа или продавца\n" +
             "/requests - список всех заявок на роль админа или продавца\n" +
             "/set (id role) - установить пользователю с id роль role. Если роль не указана - удалить все роли у данного пользователя.\n" +
-            "/inventory (username) - список товаров продавца с именем username";
+            "/inventory (id) - список товаров продавца c данным id";
 
     @Override
     public String handle(Update update) {
