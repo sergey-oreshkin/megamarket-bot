@@ -10,6 +10,7 @@ services:
     environment:
       - USER_SERVICE_URL=http://user-service:8082/
       - MARKET_SERVICE_URL=http://market-service:8085/
+      - STORAGE_SERVICE_URL=http://storage:8000/soap?wsdl
 
   storage:
     build: ./storageservice

@@ -32,15 +32,16 @@ public class BuyHandler implements Handler {
                     .productId(Long.valueOf(idString[1]))
                     .quantity(1)
                     .build();
+            log.info("OrderResponseDto={}", response);
             client.addProduct(response);
             log.info("Send correctly response /buy method");
             return "Ваш продукт успешно добавлен в корзину";
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            log.error("Validation error /buy method");
+            log.error("Validation error /buy method: {}", e.getMessage(), e);
             return "Ошибка валидации, введите в верном формате\n" +
                     "Например,  /buy 1234";
         } catch (FeignException e) {
-            log.error("Feign error /buy method");
+            log.error("Feign error /buy method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке добавить продукт в корзину";
         }
     }

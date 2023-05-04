@@ -2,6 +2,7 @@ package group.megamarket.gateway.config;
 
 import group.megamarket.gateway.soap.StorageService;
 import group.megamarket.gateway.soap.StorageServiceImplService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,10 +17,12 @@ import java.net.URL;
 @Configuration
 public class SoapConfig {
 
+    @Value("${storage-service.url}") String url;
+
     @Bean
     public StorageService storageService() throws MalformedURLException {
         QName serviceQName = new QName("http://localhost:8000/soap", "StorageServiceImplService");
-        Service service = StorageServiceImplService.create(new URL("http://storage:8000/soap?wsdl"), serviceQName);
+        Service service = StorageServiceImplService.create(new URL(url), serviceQName);
         return service.getPort(StorageService.class);
     }
 }

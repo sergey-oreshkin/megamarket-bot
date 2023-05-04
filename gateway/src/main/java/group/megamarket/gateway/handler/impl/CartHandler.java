@@ -1,6 +1,7 @@
 package group.megamarket.gateway.handler.impl;
 
 import feign.FeignException;
+import group.megamarket.gateway.dto.market.OrderResponseDto;
 import group.megamarket.gateway.feign.MarketServiceClient;
 import group.megamarket.gateway.handler.Handler;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +25,13 @@ public class CartHandler implements Handler {
             log.info("Start work /cart method");
             Long userId = update.getMessage().getFrom().getId();
             String name = update.getMessage().getFrom().getFirstName();
-            log.info("Send currency /cart response");
+            OrderResponseDto order = client.getOrder(userId);
+            log.info("OrderResponseDto={}", order);
+            log.info("Send correctly /cart method response");
             return name + ", вот данные о вашей корзине\n"
-                    + client.getOrder(userId).toString();
+                    + order;
         } catch (FeignException e) {
-            log.warn("Feign error /cart method");
+            log.error("Feign error /cart method: {}", e.getMessage(), e);
             return "Произошла ошибка, при попытке получить данные о вашей корзине";
         }
     }
