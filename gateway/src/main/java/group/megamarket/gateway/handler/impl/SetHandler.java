@@ -25,19 +25,15 @@ public class SetHandler implements Handler {
             log.info("Start work /set method");
             String message = update.getMessage().getText();
             String[] arrParam = message.split(" ");
-            boolean isAdmin = false;
-            boolean isSeller = false;
-            if (arrParam[2].equals("ADMIN")) {
-                isAdmin = true;
-            } else if (arrParam[2].equals("SELLER")) {
-                isSeller = true;
-            }
             UserRequestRoleDto requestRoleDto = UserRequestRoleDto
                     .builder()
                     .userId(Long.valueOf(arrParam[1]))
-                    .isAdmin(isAdmin)
-                    .isSeller(isSeller)
                     .build();
+            if (arrParam[2].equals("ADMIN")) {
+                requestRoleDto.setIsAdmin(true);
+            } else if (arrParam[2].equals("SELLER")) {
+                requestRoleDto.setIsSeller(true);
+            }
             log.info("UserRequestRoleDto={}", requestRoleDto);
             client.updateUserRole(requestRoleDto);
             log.info("Send correctly response /set method");

@@ -15,14 +15,14 @@ public class HandlerException {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String userNotFoundException(UserNotFoundException e) {
-        log.error(e.getMessage());
+        e.printStackTrace();
         return e.getMessage();
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String exceptionHandler(Exception e) {
-        log.error(e.getStackTrace().toString());
+        e.printStackTrace();
         return "Something goes wrong";
     }
 }
